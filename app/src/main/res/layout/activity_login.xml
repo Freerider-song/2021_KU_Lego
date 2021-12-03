@@ -4,18 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/eg_pastel_blue"
+    android:background="@color/lego_main_color"
     tools:context=".ActivityLogin">
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/input_id"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/kuime_logo" />
 
     <TextView
         android:id="@+id/textView"
@@ -35,24 +25,24 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="110dp"
         android:layout_height="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
         android:onClick="onClick"
         android:text="회원가입하기"
-        android:textColor="@color/eg_cyan_light"
+        android:textColor="@color/black"
         android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        app:layout_constraintStart_toEndOf="@+id/textView" />
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="0dp"
-        android:layout_height="55dp"
+        android:layout_height="35dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="40dp"
-        android:backgroundTint="@color/km_main_color"
+        android:background="@drawable/shape_round_corner_cyan_light_hollow"
         android:onClick="onClick"
         android:text="로그인"
         android:textColor="#ffffff"
@@ -68,11 +58,10 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="40dp"
-        android:background="@drawable/shape_round_corner_cyan_light_hollow"
-        android:drawableLeft="@drawable/login_pw"
+        android:background="@color/white"
         android:drawablePadding="10dp"
         android:ems="15"
-        android:hint="비밀번호"
+        android:hint="비밀번호를 입력해주세요."
         android:inputType="text|textPassword"
         android:paddingLeft="15dp"
         android:textColor="@color/ks_gray"
@@ -88,11 +77,10 @@
         android:layout_height="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:background="@drawable/shape_round_corner_cyan_light_hollow"
-        android:drawableLeft="@drawable/login_id"
+        android:background="@color/white"
         android:drawablePadding="10dp"
         android:ems="15"
-        android:hint="아이디"
+        android:hint="아이디 또는 이메일을 입력해주세요."
         android:inputType="text"
         android:paddingLeft="15dp"
         android:textColor="@color/ks_gray"
@@ -103,4 +91,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.42000002"
         tools:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:lineSpacingExtra="5dp"
+        android:text="환영합니다.\n전기차 충전 동반자 LeGO!"
+        android:textColor="@color/black"
+        android:textSize="23dp"
+        app:layout_constraintBottom_toTopOf="@+id/input_id"
+        app:layout_constraintStart_toStartOf="@+id/input_id" />
 </androidx.constraintlayout.widget.ConstraintLayout>

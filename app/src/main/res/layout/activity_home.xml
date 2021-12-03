@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lego_main_color"
     tools:context=".activity.ActivityHome">
 
     <Button
@@ -23,28 +24,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:text="홍길동님, 환영합니다"
+        android:layout_marginTop="20dp"
+        android:lineSpacingExtra="6dp"
+        android:text="안녕하세요,\n홍길동 님"
         android:textColor="@color/ks_gray"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_menu"
+        android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_menu" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_menu" />
 
     <Button
         android:id="@+id/btn_menu"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/btn_menu3"
+        android:background="@drawable/btn_menu"
         android:onClick="onClick"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_map"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
