@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -47,7 +48,7 @@ public class BaseActivity extends AppCompatActivity {
         super.setContentView(layoutResID);
         if (mTypeface == null) {
             // font_open_sans_regular or font_nanumgothic
-            mTypeface = Typeface.createFromAsset(this.getAssets(), StringUtil.getString(this, R.string.font_open_sans_regular)); // 외부폰트 사용
+            mTypeface = Typeface.createFromAsset(getAssets(), "fonts/nanumsquareroundr.ttf"); // 외부폰트 사용
 
             //mTypeface = Typeface.MONOSPACE; // 내장 폰트 사용
         }
@@ -106,72 +107,35 @@ public class BaseActivity extends AppCompatActivity {
 
         AccountHeader ah=ahb.build();
 
-        PrimaryDrawerItem itemUsage = new PrimaryDrawerItem();
-        itemUsage.withIdentifier(CaEngine.MENU_USAGE);
-        itemUsage.withName("홈");
-        itemUsage.withTextColor(Color.rgb(255, 255, 255));
-        itemUsage.withSelectable(false);
-        itemUsage.withIcon(R.drawable.menu_usage);
-        itemUsage.withDescription("우리집 전기 사용");
-        itemUsage.withDescriptionTextColor(Color.rgb(255, 255, 255));
+        PrimaryDrawerItem itemHome = new PrimaryDrawerItem();
+        itemHome.withIdentifier(CaEngine.MENU_HOME);
+        itemHome.withName("홈");
+        itemHome.withTextColor(Color.rgb(255, 255, 255));
+        itemHome.withSelectable(false);
+        //itemUsage.withIcon(R.drawable.menu_usage);
+        //itemUsage.withDescription("우리집 전기 사용");
+        itemHome.withDescriptionTextColor(Color.rgb(255, 255, 255));
 
-        SecondaryDrawerItem itemUsageDaily=new SecondaryDrawerItem();
-        itemUsageDaily.withIdentifier(CaEngine.MENU_USAGE_DAILY);
-        itemUsageDaily.withName("- 일일 상세 정보");
-        itemUsageDaily.withLevel(6);
-        itemUsageDaily.withTextColor(Color.rgb(255, 255, 255));
+        PrimaryDrawerItem itemSubstitute = new PrimaryDrawerItem();
+        itemSubstitute.withIdentifier(CaEngine.MENU_SUBSTITUTE);
+        itemSubstitute.withName("대리충전 서비스");
+        itemSubstitute.withTextColor(Color.rgb(255, 255, 255));
+        itemSubstitute.withSelectable(false);
+        //temAlarm.withIcon(R.drawable.menu_alarm);
 
-        SecondaryDrawerItem itemUsageMonthly=new SecondaryDrawerItem();
-        itemUsageMonthly.withIdentifier(CaEngine.MENU_USAGE_MONTHLY);
-        itemUsageMonthly.withName("- 월간 상세 정보");
-        itemUsageMonthly.withLevel(6);
-        itemUsageMonthly.withTextColor(Color.rgb(255, 255, 255));
+        PrimaryDrawerItem itemMypage = new PrimaryDrawerItem();
+        itemMypage.withIdentifier(CaEngine.MENU_MYPAGE);
+        itemMypage.withName("내정보");
+        itemMypage.withTextColor(Color.rgb(255, 255, 255));
+        itemMypage.withSelectable(false);
+        //itemSiteState.withIcon(R.drawable.menu_site_state);
 
-        SecondaryDrawerItem itemUsageYearly=new SecondaryDrawerItem();
-        itemUsageYearly.withIdentifier(CaEngine.MENU_USAGE_YEARLY);
-        itemUsageYearly.withName("- 연간 상세 정보");
-        itemUsageYearly.withLevel(6);
-        itemUsageYearly.withTextColor(Color.rgb(255, 255, 255));
-
-        PrimaryDrawerItem itemSiteState = new PrimaryDrawerItem();
-        itemSiteState.withIdentifier(CaEngine.MENU_SITE_STATE);
-        itemSiteState.withName("우리 아파트 전기 사용");
-        itemSiteState.withTextColor(Color.rgb(255, 255, 255));
-        itemSiteState.withSelectable(false);
-        itemSiteState.withIcon(R.drawable.menu_site_state);
-
-
-        PrimaryDrawerItem itemAlarm = new PrimaryDrawerItem();
-        itemAlarm.withIdentifier(CaEngine.MENU_ALARM);
-        itemAlarm.withName("알림");
-        itemAlarm.withTextColor(Color.rgb(255, 255, 255));
-        itemAlarm.withSelectable(false);
-        itemAlarm.withIcon(R.drawable.menu_alarm);
-
-
-        PrimaryDrawerItem itemNotice = new PrimaryDrawerItem();
-        itemNotice.withIdentifier(CaEngine.MENU_NOTICE);
-        itemNotice.withName("공지사항");
-        itemNotice.withTextColor(Color.rgb(255, 255, 255));
-        itemNotice.withSelectable(false);
-        itemNotice.withIcon(R.drawable.menu_notice);
-
-
-        PrimaryDrawerItem itemFaq = new PrimaryDrawerItem();
-        itemFaq.withIdentifier(CaEngine.MENU_FAQ);
-        itemFaq.withName("자주묻는질문 (FAQ)");
-        itemFaq.withTextColor(Color.rgb(255, 255, 255));
-        itemFaq.withSelectable(false);
-        itemFaq.withIcon(R.drawable.menu_faq);
-
-
-        PrimaryDrawerItem itemQna = new PrimaryDrawerItem();
-        itemQna.withIdentifier(CaEngine.MENU_QNA);
-        itemQna.withName("고객센터 (Q & A)");
-        itemQna.withTextColor(Color.rgb(255, 255, 255));
-        itemQna.withSelectable(false);
-        itemQna.withIcon(R.drawable.menu_qna);
-
+        PrimaryDrawerItem itemPay = new PrimaryDrawerItem();
+        itemPay.withIdentifier(CaEngine.MENU_PAY);
+        itemPay.withName("결제 관리");
+        itemPay.withTextColor(Color.rgb(255, 255, 255));
+        itemPay.withSelectable(false);
+        //itemNotice.withIcon(R.drawable.menu_notice);
 
         PrimaryDrawerItem itemSetting = new PrimaryDrawerItem();
         itemSetting.withIdentifier(CaEngine.MENU_SETTING);
@@ -191,11 +155,10 @@ public class BaseActivity extends AppCompatActivity {
         final Context Ctx=getApplicationContext();
 
         m_Drawer = new DrawerBuilder()
-                .withActivity(this).withSliderBackgroundColor(getResources().getColor(R.color.eg_menu_blue)).withAccountHeader(ah)
-                .addDrawerItems(itemUsage, itemUsageDaily, itemUsageMonthly, itemUsageYearly,
-                        itemSiteState,
-                        //itemPoint, itemElecInfoSave, itemElecInfoPrice,
-                        itemAlarm, itemNotice, itemFaq, itemQna, itemSetting, itemLogout)
+                .withActivity(this).withSliderBackgroundColor(getResources().getColor(R.color.lego_side_menu)).withAccountHeader(ah)
+                .addDrawerItems(itemHome, itemSubstitute,
+                        itemMypage,
+                        itemSubstitute, itemPay, itemSetting, itemLogout)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -203,71 +166,33 @@ public class BaseActivity extends AppCompatActivity {
                         Log.i("Drawer", "position="+position+", id="+nId);
 
                         switch (nId) {
-                            case CaEngine.MENU_USAGE: {
-                                Intent it = new Intent(This, ActivityUsage.class);
+                            case CaEngine.MENU_HOME: {
+                                Intent it = new Intent(This, ActivityHome.class);
                                 startActivity(it);
                             }
                             break;
 
-                            case CaEngine.MENU_USAGE_DAILY: {
-                                Intent it = new Intent(This, ActivityUsageDaily.class);
+                            case CaEngine.MENU_SUBSTITUTE: {
+                                //Intent it = new Intent(This, ActivityUsageDaily.class);
+                                //startActivity(it);
+                            }
+                            break;
+
+                            case CaEngine.MENU_MYPAGE: {
+                                Intent it = new Intent(This, ActivityMyPage.class);
                                 startActivity(it);
                             }
                             break;
 
-                            case CaEngine.MENU_USAGE_MONTHLY: {
-                                Intent it = new Intent(This, ActivityUsageMonthly.class);
-                                startActivity(it);
-                            }
-                            break;
-
-                            case CaEngine.MENU_USAGE_YEARLY: {
-                                Intent it = new Intent(This, ActivityUsageYearly.class);
-                                startActivity(it);
-                            }
-                            break;
-
-                            case CaEngine.MENU_SITE_STATE: {
-                                Intent it = new Intent(This, ActivitySiteState.class);
-                                startActivity(it);
-                            }
-                            break;
-
-                            case CaEngine.MENU_POINT: {
-                                Intent it = new Intent(This, ActivityPoint.class);
-                                startActivity(it);
-                            }
-                            break;
-
-                            case CaEngine.MENU_ALARM: {
-                                Intent it = new Intent(This, ActivityAlarm.class);
-                                startActivity(it);
-                            }
-                            break;
-
-                            case CaEngine.MENU_NOTICE: {
-                                Intent it = new Intent(This, ActivityNoticeList.class);
-                                startActivity(it);
-                            }
-                            break;
-
-                            case CaEngine.MENU_FAQ: {
-                                Intent it = new Intent(This, ActivityFaq.class);
-                                startActivity(it);
-                            }
-                            break;
-
-                            case CaEngine.MENU_QNA: {
-
-                                Intent it = new Intent(This, ActivityQnaList.class);
-                                startActivity(it);
-
+                            case CaEngine.MENU_PAY: {
+                                //Intent it = new Intent(This, ActivityUsageYearly.class);
+                                //startActivity(it);
                             }
                             break;
 
                             case CaEngine.MENU_SETTING: {
-                                Intent it = new Intent(This, ActivitySetting.class);
-                                startActivity(it);
+                                //Intent it = new Intent(This, ActivitySetting.class);
+                                //startActivity(it);
                             }
                             break;
 
@@ -329,39 +254,6 @@ public class BaseActivity extends AppCompatActivity {
                     @Override
                     public void onDrawerOpened(View drawerView) {
                         Log.d("Drawer", "onDrawerOpened called...");
-
-                        // alarm badge
-                        int nCountUnreadAlarm=CaApplication.m_Info.getUnreadAlarmCount();
-
-                        if (nCountUnreadAlarm==0) {
-                            m_Drawer.updateBadge(CaEngine.MENU_ALARM, null);
-                        }
-                        else {
-                            String strCount=Integer.toString(nCountUnreadAlarm);
-                            m_Drawer.updateBadge(CaEngine.MENU_ALARM, new StringHolder(strCount));
-                        }
-
-                        // notice badge
-                        int nCountUnreadNotice=CaApplication.m_Info.getUnreadNoticeCount();
-
-                        if (nCountUnreadNotice==0) {
-                            m_Drawer.updateBadge(CaEngine.MENU_NOTICE, null);
-                        }
-                        else {
-                            String strCount=Integer.toString(nCountUnreadNotice);
-                            m_Drawer.updateBadge(CaEngine.MENU_NOTICE, new StringHolder(strCount));
-                        }
-
-                        // qna badge
-                        int nCountUnreadQna=CaApplication.m_Info.getUnreadQnaCount();
-
-                        if (nCountUnreadQna==0) {
-                            m_Drawer.updateBadge(CaEngine.MENU_QNA, null);
-                        }
-                        else {
-                            String strCount=Integer.toString(nCountUnreadQna);
-                            m_Drawer.updateBadge(CaEngine.MENU_QNA, new StringHolder(strCount));
-                        }
 
                     }
 

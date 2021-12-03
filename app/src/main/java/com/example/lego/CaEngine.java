@@ -27,9 +27,9 @@ public class CaEngine {
     public static final int AUTH_TYPE_SUBSCRIBE = 1001;
     public static final int AUTH_TYPE_CHANGE_PASSWORD = 1002;
 
-    public static final int MENU_USAGE = 100;
-    public static final int MENU_USAGE_DAILY = 101;
-    public static final int MENU_USAGE_MONTHLY = 102;
+    public static final int MENU_PAY = 100;
+    public static final int MENU_SUBSTITUTE= 101;
+    public static final int MENU_MYPAGE = 102;
     public static final int MENU_USAGE_YEARLY = 103;
     public static final int MENU_HOME = 200;
     public static final int MENU_SAVING = 300;

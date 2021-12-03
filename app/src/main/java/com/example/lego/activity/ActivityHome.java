@@ -33,10 +33,10 @@ import java.util.Date;
 
 import static com.example.lego.CaApplication.m_Context;
 
-public class ActivityHome extends AppCompatActivity implements IaResultHandler {
+public class ActivityHome extends BaseActivity implements IaResultHandler {
 
     CaPref m_Pref;
-    TextView tvName, tvStation, tvCar, tvReserveType, tvMargin, tvCurrentCap, tvEmpty;
+    TextView tvName, tvStation, tvCar, tvReserveType, tvMargin, tvCurrentCap, tvEmpty, tvEfficiency;
     ImageView ivBattery, ivNext;
     Button btnMap;
 
@@ -46,7 +46,7 @@ public class ActivityHome extends AppCompatActivity implements IaResultHandler {
 
     ArrayList<CaHistory> alHistory = new ArrayList<>();
 
-    int nCurrentCap;
+    int nCurrentCap=62;
 
     SimpleDateFormat mYearMonth = new SimpleDateFormat("yyyy-MM");
     SimpleDateFormat mMonthDay = new SimpleDateFormat("MM-dd");
@@ -71,9 +71,11 @@ public class ActivityHome extends AppCompatActivity implements IaResultHandler {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        prepareDrawer();
 
         m_Context = getApplicationContext();
         m_Pref = new CaPref(m_Context);
@@ -84,17 +86,19 @@ public class ActivityHome extends AppCompatActivity implements IaResultHandler {
 
         tvName = findViewById(R.id.tv_name);
         tvStation = findViewById(R.id.tv_station);
-        tvCar = findViewById(R.id.tv_car_company);
-        tvReserveType = findViewById(R.id.tv_reserve_type);
-        tvMargin = findViewById(R.id.tv_margin);
+        tvCar = findViewById(R.id.tv_car_model);
         tvCurrentCap = findViewById(R.id.tv_current_capacity);
-        tvEmpty = findViewById(R.id.tv_empty);
-        ivNext = findViewById(R.id.iv_next);
-        ivBattery = findViewById(R.id.iv_battery);
-        tvName.setText(CaApplication.m_Info.strName +"님, 환영합니다");
-        tvStation.setText(CaApplication.m_Info.strStationName);
+        tvName.setText("안녕하세요,\n" + CaApplication.m_Info.strName +" 님");
         tvCar.setText(CaApplication.m_Info.strCarModel);
-        //btnMap.findViewById(R.id.btn_map);
+
+        if(CaApplication.m_Info.dEfficiency !=0.1){
+            tvEfficiency.setText(String.format("%.0f", CaApplication.m_Info.dBatteryCapacity
+                    * (double)nCurrentCap
+                    / 100 * CaApplication.m_Info.dEfficiency)+ " km");
+        }
+        else{
+            tvEfficiency.setVisibility(View.INVISIBLE);
+        }
 
         calRatio();
 
@@ -104,14 +108,10 @@ public class ActivityHome extends AppCompatActivity implements IaResultHandler {
     protected  void onResume() {
 
         super.onResume();
-
         CaApplication.m_Engine.GetHomeInfo(CaApplication.m_Info.strId, this,this);
         CaApplication.m_Engine.GetChargeHistory(CaApplication.m_Info.strId, this,this);
 
-
-
     }
-
 
     public void viewSetting(){
 
@@ -120,83 +120,10 @@ public class ActivityHome extends AppCompatActivity implements IaResultHandler {
 
         Log.i("HOME", "bPaid is " + CaApplication.m_Info.bPaid);
         //tvMargin
-        if(CaApplication.m_Info.bPaid == 1 || CaApplication.m_Info.bPaid == -1){ //이용중인 서비스가 없을 때
-            Log.i("Home", "이용 중인 서비스가 없습니다");
 
-            tvStation.setVisibility(View.INVISIBLE);
-            tvCar.setVisibility(View.INVISIBLE);
-            tvReserveType.setVisibility(View.INVISIBLE);
-            tvCurrentCap.setVisibility(View.INVISIBLE);
-            ivNext.setVisibility(View.INVISIBLE);
-            ivBattery.setVisibility(View.INVISIBLE);
-
-            tvEmpty.setVisibility(View.VISIBLE);
+        tvCurrentCap.setText(Integer.toString(nCurrentCap)+ "%");
 
 
-        }
-        else{
-            tvEmpty.setVisibility(View.INVISIBLE);
-            tvStation.setVisibility(View.VISIBLE);
-            tvCar.setVisibility(View.VISIBLE);
-            tvReserveType.setVisibility(View.VISIBLE);
-            tvCurrentCap.setVisibility(View.VISIBLE);
-            ivNext.setVisibility(View.VISIBLE);
-            ivBattery.setVisibility(View.VISIBLE);
-
-            if(CaApplication.m_Info.dtEnd.before(mNow)){
-                tvReserveType.setText("서비스가 완료되었어요!");
-            }
-            else if(mNow.before(CaApplication.m_Info.dtStart)){
-                tvReserveType.setText("서비스 이용 대기중이에요");
-            }
-            else if(CaApplication.m_Info.nReserveType == 2){
-                tvReserveType.setText("스마트한 방전 중이에요!");
-            }
-            else if(CaApplication.m_Info.nReserveType == 1){
-                tvReserveType.setText("스마트한 충전 중이에요!");
-            }
-            else if(CaApplication.m_Info.nReserveType == 3){
-                tvReserveType.setText("스마트한 충·방전 중이에요!");
-            }
-
-            if(CaApplication.m_Info.dReserveTimeRatio <=1){ //1 이상이면 아직 충전 시작 시간이 되지 않았다는 것
-                if(CaApplication.m_Info.nReserveType !=2){
-                    nCurrentCap = (int)Math.round((100-nCurrentCap)*CaApplication.m_Info.dReserveTimeRatio + nCurrentCap);
-                }
-                else{ //방전일 경우
-                    nCurrentCap = (int)Math.round(nCurrentCap- (nCurrentCap- CaApplication.m_Info.nMinCapacity)*CaApplication.m_Info.dReserveTimeRatio);
-                }
-                CaApplication.m_Info.nCurrentCap = nCurrentCap;
-
-                //m_Pref.setValue(PREF_CURRENT_CAP, nCurrentCap);
-            }
-            if(CaApplication.m_Info.dReserveTimeRatio >=1){
-                if(CaApplication.m_Info.nReserveType !=2){
-                    nCurrentCap = 100;
-                }
-                else{ //방전일 경우
-                    nCurrentCap = CaApplication.m_Info.nMinCapacity;
-                }
-                CaApplication.m_Info.nCurrentCap = nCurrentCap;
-            }
-
-            tvCurrentCap.setText(Integer.toString(nCurrentCap)+ "%");
-            if(nCurrentCap <20) {
-                ivBattery.setImageDrawable(getDrawable(R.drawable.battery1));
-            }
-            else if(nCurrentCap <40) {
-                ivBattery.setImageDrawable(getDrawable(R.drawable.battery2));
-            }
-            else if(nCurrentCap <60) {
-                ivBattery.setImageDrawable(getDrawable(R.drawable.battery3));
-            }
-            else if(nCurrentCap <90) {
-                ivBattery.setImageDrawable(getDrawable(R.drawable.battery4));
-            }
-            else if(nCurrentCap <=100) {
-                ivBattery.setImageDrawable(getDrawable(R.drawable.battery5));
-            }
-        }
 
     }
 
@@ -249,8 +176,7 @@ public class ActivityHome extends AppCompatActivity implements IaResultHandler {
             break;
 
             case R.id.btn_menu: {
-                Intent it = new Intent(this, ActivityMyPage.class);
-                startActivity(it);
+                m_Drawer.openDrawer();
             }
             break;
 

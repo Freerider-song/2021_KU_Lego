@@ -4,15 +4,24 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/drawable/shape_round_corner_cyan_light_filled_pastel_blue.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/drawable/shape_round_corner_dark_gray_filled.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/drawable/shape_round_corner_gray_filled.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/drawable/shape_round_corner_pastel_blue_filled.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_activity_sign_up_complete.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_auth.xml" value="0.4" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_car.xml" value="0.264" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_charge.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_charge_history.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_charge_result.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_home.xml" value="0.4" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_login.xml" value="0.4" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_my_page.xml" value="0.536" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_reserve_end.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_sign_up.xml" value="0.536" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_sign_up_car.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_sign_up_card.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_splash.xml" value="0.264" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_substitute.xml" value="0.4" />
       </map>
     </option>
   </component>

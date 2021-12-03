@@ -99,5 +99,5 @@
 
     <color name="km_main_color">#96ACE6</color>
     <color name="lego_main_color">#F2F2F2</color>
-
+    <color name="lego_side_menu">#F8F8F8</color>
 </resources>

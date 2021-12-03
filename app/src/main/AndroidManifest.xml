@@ -20,53 +20,77 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kuime.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ActivityFee"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.ActivityChargeResult"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityChargeHistory"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityCharge"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityCard"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityCar"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityPoint"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityMyPage"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityReserveEnd"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityReserveMin"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityReserveTime"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityReserveService"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityReserveConnect"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityReserveCharger"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityMap"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ActivitySubstitute"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ActivityFee"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityChargeResult"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityChargeHistory"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityCharge"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityCard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityCar"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityPoint"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityMyPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityReserveEnd"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityReserveMin"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityReserveTime"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityReserveService"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityReserveConnect"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityReserveCharger"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityMap"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD9ZUbqNQz1r0rry2W8bkCdfXbvaocuGxU" />
 
-        <activity android:name=".activity.ActivitySignUpComplete"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivitySignUpCard"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivitySignUpCar"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivitySignUp"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityAuth"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ActivityHome"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ActivitySignUpComplete"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivitySignUpCard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivitySignUpCar"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivitySignUp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityAuth"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityHome"
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.ActivitySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -74,8 +98,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ActivityLogin"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ActivityLogin"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

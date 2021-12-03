@@ -56,6 +56,7 @@ public class CaInfo {
 
     public String strCarCompany = "";
     public String strCarModel = "";
+    public String strCarNumber = "";
     public int nModelId = 0;
 
     public String strStationName = "";
