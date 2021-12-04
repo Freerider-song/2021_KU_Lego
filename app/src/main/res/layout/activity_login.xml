@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         android:lineSpacingExtra="5dp"
-        android:text="환영합니다.\n전기차 충전 동반자 LeGO!"
+        android:text="환영합니다.\n전기차 충전 비서 LeGO!"
         android:textColor="@color/black"
         android:textSize="23dp"
         app:layout_constraintBottom_toTopOf="@+id/input_id"

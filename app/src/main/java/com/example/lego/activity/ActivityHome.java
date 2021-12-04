@@ -186,24 +186,6 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_map: {
-                if(CaApplication.m_Info.bPaid == 1 || CaApplication.m_Info.bPaid == -1){
-                    CaApplication.m_Engine.GetStationInfo(this,this);
-                }
-                else{
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(ActivityHome.this);
-                    dlg.setMessage("충전이 진행중입니다.");
-                    dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    dlg.show();
-
-                }
-                    //CaApplication.m_Engine.GetStationInfo(this,this);
-
-            }
-            break;
 
             case R.id.btn_menu: {
                 m_Drawer.openDrawer();
@@ -216,20 +198,12 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
             }
             break;
 
-            case R.id.cl_charge_page: {
-                if(CaApplication.m_Info.bPaid == 0 && CaApplication.m_Info.dtEnd.before(mNow)){ //아직 결제 전이며, 서비스 이용 시간 이후인 경우
-                    Intent it = new Intent(this, ActivityChargeResult.class);
-                    startActivity(it);
-                }
-                else if(CaApplication.m_Info.bPaid == 0 && mNow.before(CaApplication.m_Info.dtEnd)){ //아직 결제 전이며, 서비스 이용 시간인 경우
-                    CaApplication.m_Engine.GetChargeInfo(CaApplication.m_Info.nServiceReservation, this, this);
-
-                }
+            case R.id.btn_station: {
 
             }
             break;
 
-            case R.id.cl_fee: {
+            case R.id.iv_more: {
                 Intent it = new Intent(this, ActivityFee.class);
                 startActivity(it);
             }

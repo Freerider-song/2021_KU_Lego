@@ -22,7 +22,7 @@
         android:id="@+id/tv_kuime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="전기차 충전 동반자"
+        android:text="전기차 충전 비서"
         android:textColor="@color/ks_gray"
         android:textSize="28dp"
         android:textStyle="bold"

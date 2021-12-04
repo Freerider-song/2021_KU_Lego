@@ -47,7 +47,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_fee"
                 android:layout_width="0dp"
-                android:layout_height="400dp"
+                android:layout_height="420dp"
                 android:background="@drawable/shape_squared_corner_shadow"
                 android:elevation="20dp"
                 android:onClick="onClick"
@@ -55,6 +55,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cl_charge_history">
+
+                <Button
+                    android:id="@+id/btn_station"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginBottom="20dp"
+                    android:backgroundTint="@color/white"
+                    android:onClick="onClick"
+                    android:text="추천 충전소 보기 >"
+                    android:textColor="@color/bright_blue"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toTopOf="@+id/imageView8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.521"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageView3"
@@ -71,7 +86,7 @@
                     android:id="@+id/imageView8"
                     android:layout_width="0dp"
                     android:layout_height="2.5dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="70dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_guide
@@ -145,25 +160,26 @@
 4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="23dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="29dp"
                     android:lineSpacingExtra="8dp"
                     android:text="12월 05일 19시 30분의 \n예상 배터리 잔량은 29% 입니다"
                     android:textColor="@color/black"
                     android:textSize="14dp"
                     android:textStyle="normal"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_guide
+3"
                     app:layout_constraintTop_toBottomOf="@+id/tv_guide
 3" />
 
                 <ImageView
-                    android:id="@+id/iv_next3"
+                    android:id="@+id/iv_more"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginTop="25dp"
                     android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:onClick="onClick"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/btn_back_2" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
