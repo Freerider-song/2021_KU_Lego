@@ -16,10 +16,17 @@
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_home.xml" value="0.4" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_login.xml" value="0.4" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_my_page.xml" value="0.536" />
-        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_reserve_end.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_reserve_end.xml" value="0.264" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_reserve_min.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_reserve_service.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_reserve_time.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_sign_up.xml" value="0.536" />
-        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_sign_up_car.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_sign_up_car.xml" value="0.4" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_sign_up_car_end.xml" value="0.4" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_sign_up_car_num.xml" value="0.4" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_sign_up_card.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_sign_up_prefer_station.xml" value="0.4" />
+        <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_sign_up_prefer_time.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_splash.xml" value="0.264" />
         <entry key="..\:/Users/Song/StudioProjects/2021_KU_Lego/app/src/main/res/layout/activity_substitute.xml" value="0.4" />
       </map>

@@ -36,9 +36,9 @@ import static com.example.lego.CaApplication.m_Context;
 public class ActivityHome extends BaseActivity implements IaResultHandler {
 
     CaPref m_Pref;
-    TextView tvName, tvStation, tvCar, tvReserveType, tvMargin, tvCurrentCap, tvEmpty, tvEfficiency;
-    ImageView ivBattery, ivNext;
-    Button btnMap;
+    TextView tvName, tvStation, tvCar, tvCurrentCap2, tvMargin, tvCurrentCap, tvEfficiency, tvEfficiency2, tvNoCar;
+    ImageView ivCar;
+    Button btnMap, btnCar;
 
     long now;
     Date mNow;
@@ -88,6 +88,12 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
         tvStation = findViewById(R.id.tv_station);
         tvCar = findViewById(R.id.tv_car_model);
         tvCurrentCap = findViewById(R.id.tv_current_capacity);
+        tvCurrentCap2= findViewById(R.id.tv_current_capacity2);
+        tvEfficiency2 = findViewById(R.id.tv_efficiency2);
+        tvEfficiency = findViewById(R.id.tv_efficiency);
+        ivCar = findViewById(R.id.iv_car);
+        tvNoCar = findViewById(R.id.tv_no_car);
+        btnCar = findViewById(R.id.btn_car);
         tvName.setText("안녕하세요,\n" + CaApplication.m_Info.strName +" 님");
         tvCar.setText(CaApplication.m_Info.strCarModel);
 
@@ -121,9 +127,33 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
         Log.i("HOME", "bPaid is " + CaApplication.m_Info.bPaid);
         //tvMargin
 
-        tvCurrentCap.setText(Integer.toString(nCurrentCap)+ "%");
+        if(CaApplication.m_Info.bPaid == 1 || CaApplication.m_Info.bPaid == -1){ //차가 없을때
+            Log.i("Home", "이용 중인 서비스가 없습니다");
 
+            tvEfficiency.setVisibility(View.INVISIBLE);
+            tvEfficiency2.setVisibility(View.INVISIBLE);
+            tvCar.setVisibility(View.INVISIBLE);
+            tvCurrentCap2.setVisibility(View.INVISIBLE);
+            tvCurrentCap.setVisibility(View.INVISIBLE);
+            ivCar.setVisibility(View.INVISIBLE);
 
+            tvNoCar.setVisibility(View.VISIBLE);
+            btnCar.setVisibility(View.VISIBLE);
+
+        }
+        else {
+            tvEfficiency.setVisibility(View.VISIBLE);
+            tvEfficiency2.setVisibility(View.VISIBLE);
+            tvCar.setVisibility(View.VISIBLE);
+            tvCurrentCap2.setVisibility(View.VISIBLE);
+            tvCurrentCap.setVisibility(View.VISIBLE);
+            ivCar.setVisibility(View.VISIBLE);
+
+            tvNoCar.setVisibility(View.INVISIBLE);
+            btnCar.setVisibility(View.INVISIBLE);
+
+            tvCurrentCap.setText(Integer.toString(nCurrentCap)+ "%");
+        }
 
     }
 
@@ -180,8 +210,8 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
             }
             break;
 
-            case R.id.cl_charge_history: {
-                Intent it = new Intent(this, ActivityChargeHistory.class);
+            case R.id.btn_car: {
+                Intent it = new Intent(this, ActivitySignUpCar.class);
                 startActivity(it);
             }
             break;

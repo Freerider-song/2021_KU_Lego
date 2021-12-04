@@ -19,12 +19,12 @@ import com.example.lego.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ActivitySignUpCard extends AppCompatActivity implements IaResultHandler {
+public class ActivitySignUpCarNum extends AppCompatActivity implements IaResultHandler {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_card);
+        setContentView(R.layout.activity_sign_up_car_num);
     }
 
     public void onClick(View v) {
@@ -35,9 +35,8 @@ public class ActivitySignUpCard extends AppCompatActivity implements IaResultHan
             break;
             case R.id.btn_next: {
 
-                CaApplication.m_Engine.SetSignUpInfo(CaApplication.m_Info.strName, CaApplication.m_Info.strId,
-                        CaApplication.m_Info.strPassword, CaApplication.m_Info.nModelId, this, this);
-
+                Intent it = new Intent(this, ActivitySignUpPreferTime.class);
+                startActivity(it);
             }
             break;
 
@@ -71,7 +70,7 @@ public class ActivitySignUpCard extends AppCompatActivity implements IaResultHan
                         startActivity(it);
 
                     } else {
-                        AlertDialog.Builder dlg = new AlertDialog.Builder(ActivitySignUpCard.this);
+                        AlertDialog.Builder dlg = new AlertDialog.Builder(ActivitySignUpCarNum.this);
                         dlg.setMessage("회원가입이 정상적으로 진행되지 않았습니다. 처음부터 다시 진행해주세요");
                         dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

@@ -67,7 +67,7 @@ public class ActivitySignUpCar extends AppCompatActivity implements IaResultHand
             break;
             case R.id.btn_next: {
                 CaApplication.m_Info.bCarRegistered = true;
-                Intent it = new Intent(this, ActivitySignUpCard.class);
+                Intent it = new Intent(this, ActivitySignUpCarNum.class);
                 startActivity(it);
             }
             break;
