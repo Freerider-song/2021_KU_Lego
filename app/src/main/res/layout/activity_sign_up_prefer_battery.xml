@@ -5,24 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lego_main_color"
-    tools:context=".activity.ActivitySignUpCarNum">
+    tools:context=".activity.ActivitySignUpPreferBattery">
 
     <EditText
-        android:id="@+id/et_car_num"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:id="@+id/et_battery"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginStart="27dp"
         android:layout_marginEnd="27dp"
         android:ems="10"
-        android:hint="10가 1234"
+        android:hint="19"
         android:inputType="textPersonName"
         android:textColor="@color/ks_gray"
-        android:textSize="24dp"
+        android:textSize="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.38" />
+        app:layout_constraintVertical_bias="0.419" />
 
     <Button
         android:id="@+id/btn_back"
@@ -43,14 +44,28 @@
         android:layout_height="0dp"
         android:layout_marginStart="27dp"
         android:layout_marginTop="45dp"
-        android:gravity="center_horizontal"
+        android:gravity="center_horizontal|left"
         android:lineSpacingExtra="8sp"
-        android:text="차량 번호를 입력해주세요."
+        android:text="선호하는 최저 배터리 잔량을\n알려주세요"
         android:textColor="@color/ks_gray"
         android:textSize="22dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_back" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal|left"
+        android:lineSpacingExtra="8sp"
+        android:text="%"
+        android:textColor="@color/ks_gray"
+        android:textSize="22dp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/et_hour"
+        app:layout_constraintStart_toEndOf="@+id/et_hour" />
 
     <Button
         android:id="@+id/btn_next"

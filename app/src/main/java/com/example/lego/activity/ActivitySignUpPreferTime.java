@@ -25,7 +25,7 @@ public class ActivitySignUpPreferTime extends AppCompatActivity implements IaRes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_car_num);
+        setContentView(R.layout.activity_sign_up_prefer_time);
 
         etHour = findViewById(R.id.et_hour);
         etMinute = findViewById(R.id.et_minute);

@@ -13,7 +13,7 @@ public class ActivitySignUpCarEnd extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_sign_up_complete);
+        setContentView(R.layout.activity_sign_up_car_end);
     }
 
     public void onClick(View v) {

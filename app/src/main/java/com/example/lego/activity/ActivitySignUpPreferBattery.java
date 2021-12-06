@@ -3,65 +3,31 @@ package com.example.lego.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import com.example.lego.CaApplication;
 import com.example.lego.CaEngine;
 import com.example.lego.CaResult;
 import com.example.lego.IaResultHandler;
 import com.example.lego.R;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ActivitySignUpPreferStation extends AppCompatActivity implements IaResultHandler, OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
+public class ActivitySignUpPreferBattery extends AppCompatActivity implements IaResultHandler {
 
-    private GoogleMap mMap;
-    private Marker currentMarker = null;
-
+    EditText etHour, etMinute;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_prefer_station);
-    }
+        setContentView(R.layout.activity_sign_up_prefer_battery);
 
-    @Override
-    public void onMapReady(@NonNull @NotNull GoogleMap googleMap) {
-
-        mMap = googleMap;
-        LatLng Station = new LatLng(126.524045, 33.499956);
-
-        //marker size 조절
-        int height = 150;
-        int width = 150;
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.electricity_marker);
-        Bitmap b=bitmapdraw.getBitmap();
-        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(Station);
-        markerOptions.title(CaApplication.m_Info.strStationName);
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-        mMap.addMarker(markerOptions);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Station, 16));
-
+        etHour = findViewById(R.id.et_hour);
+        etMinute = findViewById(R.id.et_minute);
     }
 
     public void onClick(View v) {
@@ -71,9 +37,26 @@ public class ActivitySignUpPreferStation extends AppCompatActivity implements Ia
             }
             break;
             case R.id.btn_next: {
+                String strHour = etHour.getText().toString();
+                String strMinute = etMinute.getText().toString();
 
-                Intent it = new Intent(this, ActivitySignUpPreferBattery.class);
-                startActivity(it);
+                if (strHour.isEmpty() || strMinute.isEmpty()) {
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(ActivitySignUpPreferBattery.this);
+                    //dlg.setTitle("경고"); //제목
+                    dlg.setMessage("선호하는 시각을 입력해주세요"); // 메시지
+                    //dlg.setIcon(R.drawable.deum); // 아이콘 설정
+//                버튼 클릭시 동작
+
+                    dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    dlg.show();
+                }
+                else{
+                    Intent it = new Intent(this, ActivitySignUpCarEnd.class);
+                    startActivity(it);
+                }
 
             }
             break;
@@ -108,7 +91,7 @@ public class ActivitySignUpPreferStation extends AppCompatActivity implements Ia
                         startActivity(it);
 
                     } else {
-                        AlertDialog.Builder dlg = new AlertDialog.Builder(ActivitySignUpPreferStation.this);
+                        AlertDialog.Builder dlg = new AlertDialog.Builder(ActivitySignUpPreferBattery.this);
                         dlg.setMessage("회원가입이 정상적으로 진행되지 않았습니다. 처음부터 다시 진행해주세요");
                         dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

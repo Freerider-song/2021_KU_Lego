@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lego_main_color"
-    tools:context=".activity.ActivityReserveEnd">
+    tools:context=".activity.ActivitySignUpComplete">
 
     <Button
         android:id="@+id/btn_back_login"
