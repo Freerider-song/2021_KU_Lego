@@ -20,8 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kuime.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.ActivityDriverSub"></activity>
         <activity
-            android:name=".activity.ActivitySubstitute"
+            android:name=".activity.ActivitySubstituteRequest"
             android:exported="false" />
         <activity
             android:name=".activity.ActivityFee"

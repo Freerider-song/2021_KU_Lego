@@ -108,8 +108,8 @@ public class ActivityChargeHistory extends AppCompatActivity implements IaResult
                 LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.list_item_history, null);
 
-                holder.tvChargeDate = convertView.findViewById(R.id.tv_charge_date);
-                holder.tvChargeType = convertView.findViewById(R.id.tv_charge_type);
+                holder.tvChargeDate = convertView.findViewById(R.id.tv_name);
+                holder.tvChargeType = convertView.findViewById(R.id.tv_time);
                 holder.tvEarningFee = convertView.findViewById(R.id.tv_earning_fee);
 
                 convertView.setTag(holder);

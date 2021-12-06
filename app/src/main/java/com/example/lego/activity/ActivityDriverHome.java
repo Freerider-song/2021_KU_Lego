@@ -3,13 +3,20 @@ package com.example.lego.activity;
 import static com.example.lego.CaApplication.m_Context;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +26,8 @@ import com.example.lego.CaPref;
 import com.example.lego.CaResult;
 import com.example.lego.IaResultHandler;
 import com.example.lego.R;
+import com.example.lego.model.CaCharger;
+import com.example.lego.model.CaCustomer;
 import com.example.lego.model.CaHistory;
 import com.example.lego.model.CaStation;
 
@@ -34,38 +43,88 @@ import java.util.Date;
 public class ActivityDriverHome extends BaseActivity implements IaResultHandler {
 
     CaPref m_Pref;
-    TextView tvName, tvStation, tvCar, tvCurrentCap2, tvMargin, tvCurrentCap, tvEfficiency, tvEfficiency2, tvNoCar;
-    ImageView ivCar;
-    Button btnMap, btnCar;
-
+    TextView tvRemain, tvToday;
+    ListView listView;
+    private CustomerAdapter CustomerAdapter;
     long now;
     Date mNow;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-    ArrayList<CaHistory> alHistory = new ArrayList<>();
+    ArrayList<CaCustomer> alCustomer = new ArrayList<>();
 
-    int nCurrentCap=62;
-
-    SimpleDateFormat mYearMonth = new SimpleDateFormat("yyyy-MM");
-    SimpleDateFormat mMonthDay = new SimpleDateFormat("MM-dd");
+    SimpleDateFormat mMonth = new SimpleDateFormat("yyyy-MM");
+    SimpleDateFormat mMonthDay = new SimpleDateFormat("MM월 dd일");
 
     String strYearMonth;
 
-    public void calRatio(){
-        if(CaApplication.m_Info.dtStart != null && CaApplication.m_Info.dtEnd != null){
-            long calDate = CaApplication.m_Info.dtEnd.getTime() - CaApplication.m_Info.dtStart.getTime();
-            long calNow = now-CaApplication.m_Info.dtStart.getTime();
-            if(calNow>=0){
-                CaApplication.m_Info.dReserveTimeRatio = calNow / (double) calDate;
-                Log.d("HOME", "ReserveTimeRatio is " + CaApplication.m_Info.dReserveTimeRatio);
-                if(mNow.before(CaApplication.m_Info.dtEnd)){
-                    CaApplication.m_Info.dtStart = mNow; //시작시간을 현재시간으로 바꿔주어서 나중에 다시 이 화면에 들어오게 되었을 때 RTRatio 가 현실 반영하게끔 바꿔줌
-                }
-            }
+
+    private class CustomerViewHolder {
+        public TextView tvName;
+        public TextView tvTime, tvLocation, tvCarModel, tvCarNumber;
+
+    }
+
+    private class CustomerAdapter extends BaseAdapter {
+
+        Typeface tf;
+
+        public CustomerAdapter() {
+            super();
+
 
         }
-        nCurrentCap = CaApplication.m_Info.nCurrentCap; //nCurrentCap = 45
-        Log.i("HOME", "current cap is " +nCurrentCap + "ratio is " + CaApplication.m_Info.dReserveTimeRatio);
+
+        @Override
+        public int getCount() {
+            //Log.i("ChargeHistory" , "alHistory size in listview" + alHistory.size());
+            return 4;
+            //return alCustomer.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return 0;
+            //return alCustomer.get(position);
+
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            CustomerViewHolder holder;
+            if (convertView == null) {
+                holder = new CustomerViewHolder();
+
+                LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.list_customer, null);
+
+                holder.tvName = convertView.findViewById(R.id.tv_name);
+                holder.tvTime= convertView.findViewById(R.id.tv_time);
+                holder.tvLocation = convertView.findViewById(R.id.tv_location);
+                holder.tvCarModel= convertView.findViewById(R.id.tv_car_model);
+                holder.tvCarNumber = convertView.findViewById(R.id.tv_car_number);
+
+                convertView.setTag(holder);
+            }
+            else {
+                holder = (CustomerViewHolder) convertView.getTag();
+            }
+
+            final CaCustomer customer= alCustomer.get(position);
+            tf = Typeface.createFromAsset(getAssets(), "fonts/nanumsquareroundr.ttf");
+            holder.tvName.setTypeface(tf);
+            holder.tvTime.setTypeface(tf);
+            holder.tvLocation.setTypeface(tf);
+            holder.tvCarModel.setTypeface(tf);
+            holder.tvCarNumber.setTypeface(tf);
+
+
+            return convertView;
+        }
     }
 
     @Override
@@ -79,32 +138,34 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
         m_Pref = new CaPref(m_Context);
         now = System.currentTimeMillis();
         mNow = new Date(now);
+        Calendar calToday = Calendar.getInstance();
 
 
+        tvRemain = findViewById(R.id.tv_remain);
+        tvToday = findViewById(R.id.tv_today);
 
-        tvName = findViewById(R.id.tv_name);
-        tvStation = findViewById(R.id.tv_station);
-        tvCar = findViewById(R.id.tv_car_model);
-        tvCurrentCap = findViewById(R.id.tv_current_capacity);
-        tvCurrentCap2= findViewById(R.id.tv_current_capacity2);
-        tvEfficiency2 = findViewById(R.id.tv_efficiency2);
-        tvEfficiency = findViewById(R.id.tv_efficiency);
-        ivCar = findViewById(R.id.iv_car);
-        tvNoCar = findViewById(R.id.tv_no_car);
-        btnCar = findViewById(R.id.btn_car);
-        tvName.setText("안녕하세요,\n" + CaApplication.m_Info.strName +" 님");
-        tvCar.setText(CaApplication.m_Info.strCarModel);
+        listView = findViewById(R.id.lv_customer_list);
 
-        if(CaApplication.m_Info.dEfficiency !=0.1){
-            tvEfficiency.setText(String.format("%.0f", CaApplication.m_Info.dBatteryCapacity
-                    * (double)nCurrentCap
-                    / 100 * CaApplication.m_Info.dEfficiency)+ " km");
-        }
-        else{
-            tvEfficiency.setVisibility(View.INVISIBLE);
-        }
+        tvToday.setText(mMonthDay.format(calToday.getTime()) + "\n오늘의 고객 리스트");
 
-        calRatio();
+        CustomerAdapter= new CustomerAdapter();
+
+        listView.setAdapter(CustomerAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final CaCustomer customer= alCustomer.get(position);
+
+                Intent intent = new Intent(ActivityDriverHome.this, ActivityDriverSub.class);
+                intent.putExtra("customer", customer.nReserveId);
+                startActivity(intent);
+
+
+            }
+        });
+
 
     }
 
@@ -112,46 +173,6 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
     protected  void onResume() {
 
         super.onResume();
-        CaApplication.m_Engine.GetHomeInfo(CaApplication.m_Info.strId, this,this);
-        CaApplication.m_Engine.GetChargeHistory(CaApplication.m_Info.strId, this,this);
-
-    }
-
-    public void viewSetting(){
-
-        now = System.currentTimeMillis();
-        mNow = new Date(now);
-
-        Log.i("HOME", "bPaid is " + CaApplication.m_Info.bPaid);
-        //tvMargin
-
-        if(CaApplication.m_Info.bPaid == 1 || CaApplication.m_Info.bPaid == -1){ //차가 없을때
-            Log.i("Home", "이용 중인 서비스가 없습니다");
-
-            tvEfficiency.setVisibility(View.INVISIBLE);
-            tvEfficiency2.setVisibility(View.INVISIBLE);
-            tvCar.setVisibility(View.INVISIBLE);
-            tvCurrentCap2.setVisibility(View.INVISIBLE);
-            tvCurrentCap.setVisibility(View.INVISIBLE);
-            ivCar.setVisibility(View.INVISIBLE);
-
-            tvNoCar.setVisibility(View.VISIBLE);
-            btnCar.setVisibility(View.VISIBLE);
-
-        }
-        else {
-            tvEfficiency.setVisibility(View.VISIBLE);
-            tvEfficiency2.setVisibility(View.VISIBLE);
-            tvCar.setVisibility(View.VISIBLE);
-            tvCurrentCap2.setVisibility(View.VISIBLE);
-            tvCurrentCap.setVisibility(View.VISIBLE);
-            ivCar.setVisibility(View.VISIBLE);
-
-            tvNoCar.setVisibility(View.INVISIBLE);
-            btnCar.setVisibility(View.INVISIBLE);
-
-            tvCurrentCap.setText(Integer.toString(nCurrentCap)+ "%");
-        }
 
     }
 
@@ -161,9 +182,6 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
         AlertDialog.Builder dlg = new AlertDialog.Builder(ActivityDriverHome.this);
         dlg.setTitle("경고"); //제목
         dlg.setMessage("앱을 종료하시겠습니까?"); // 메시지
-        //dlg.setIcon(R.drawable.deum); // 아이콘 설정
-//                버튼 클릭시 동작
-
         dlg.setNegativeButton("취소", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             }
@@ -186,26 +204,10 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
         switch (v.getId()) {
 
             case R.id.btn_menu: {
-                m_Drawer.openDrawer();
-            }
-            break;
-
-            case R.id.btn_car: {
-                Intent it = new Intent(this, ActivitySignUpCar.class);
-                startActivity(it);
-            }
-            break;
-
-            case R.id.btn_station: {
 
             }
             break;
 
-            case R.id.iv_more: {
-                Intent it = new Intent(this, ActivityFee.class);
-                startActivity(it);
-            }
-            break;
 
         }
     }
@@ -250,104 +252,6 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
                     }
                     Intent it = new Intent(this, ActivityMap.class);
                     startActivity(it);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            break;
-
-            case CaEngine.GET_CHARGE_INFO: {
-
-                try {
-                    JSONObject jo = Result.object;
-                    CaApplication.m_Info.nReserveType = jo.getInt("reserve_type");
-                    CaApplication.m_Info.dtEnd = CaApplication.m_Info.parseDate(jo.getString("finish_time"));
-                    CaApplication.m_Info.nExpectedFee = jo.getInt("expected_fee");
-                    CaApplication.m_Info.dDy = jo.getDouble("dx");
-                    CaApplication.m_Info.dDx = jo.getDouble("dy");
-
-                    Intent it = new Intent(this, ActivityCharge.class);
-                    startActivity(it);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            break;
-
-            case CaEngine.GET_HOME_INFO: {
-
-                try {
-                    Log.i("LOGIN", "GetHomeInfo Called...");
-                    JSONObject jo = Result.object;
-                    CaApplication.m_Info.strName = jo.getString("name");
-                    CaApplication.m_Info.strCarModel = jo.getString("car_model_name");
-                    if(!jo.getString("efficiency").equals("정보없음")){
-                        CaApplication.m_Info.dEfficiency = jo.getDouble("efficiency");
-                    }
-                    CaApplication.m_Info.dBatteryCapacity = jo.getDouble("battery_capacity");
-                    CaApplication.m_Info.bPaid = jo.getInt("is_paid");
-
-                    if(CaApplication.m_Info.bPaid != -1){
-                        CaApplication.m_Info.nServiceReservation = jo.getString("service_reservation_id");
-                        CaApplication.m_Info.dtStart = CaApplication.m_Info.parseDate(jo.getString("start_time"));
-                        CaApplication.m_Info.dtEnd = CaApplication.m_Info.parseDate(jo.getString("finish_time"));
-                        CaApplication.m_Info.strStationName = jo.getString("station_name");
-                        CaApplication.m_Info.nReserveType = jo.getInt("reserve_type");
-                        if (jo.isNull("minimum_capacity")) {
-                            //Usage.m_dUsage=0.0;
-                            CaApplication.m_Info.nMinCapacity = 0;
-                        } else {
-                            CaApplication.m_Info.nMinCapacity = jo.getInt("minimum_capacity");
-                        }
-                    }
-
-                    viewSetting();
-                    calRatio();
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            break;
-
-            case CaEngine.GET_CHARGE_HISTORY: {
-
-                try {
-                    JSONObject jo = Result.object;
-                    if(jo.getJSONArray("list_history").length() == 0){
-                    }
-                    else{
-                        JSONArray ja = jo.getJSONArray("list_history");
-
-                        alHistory.clear();
-                        Log.i("ChargeHistory" , "ja size" + ja.length());
-
-                        Calendar calToday = Calendar.getInstance();
-
-                        strYearMonth = mYearMonth.format(calToday.getTime());
-
-                        for(int i=0;i<ja.length();i++){
-                            JSONObject joHistory = ja.getJSONObject(i);
-                            CaHistory history = new CaHistory();
-
-                            history.dtReserve = CaApplication.m_Info.parseDate(joHistory.getString("reserve_time"));
-                            history.nReserveType = joHistory.getInt("reserve_type");
-                            history.nFee = joHistory.getInt("expected_fee");
-
-
-                            if(mYearMonth.format(history.dtReserve).equals(strYearMonth)){
-                                alHistory.add(history);
-                            }
-
-
-                        }
-                        Log.i("ChargeHistory" , "alHistory size" + alHistory.size());
-
-                    }
-                    tvMargin.setText(CaApplication.m_Info.m_dfWon.format(alHistory.size() * 1562) +" 원을 벌었어요");
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
