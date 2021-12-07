@@ -54,7 +54,7 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
 
     SimpleDateFormat mMonth = new SimpleDateFormat("yyyy-MM");
     SimpleDateFormat mMonthDay = new SimpleDateFormat("MM월 dd일");
-
+    SimpleDateFormat mAm= new SimpleDateFormat("a hh시 mm분");
     String strYearMonth;
 
 
@@ -77,14 +77,14 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
         @Override
         public int getCount() {
             //Log.i("ChargeHistory" , "alHistory size in listview" + alHistory.size());
-            return 4;
-            //return alCustomer.size();
+            //return 4;
+            return alCustomer.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return 0;
-            //return alCustomer.get(position);
+            //return 0;
+            return alCustomer.get(position);
 
         }
 
@@ -122,6 +122,11 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
             holder.tvCarModel.setTypeface(tf);
             holder.tvCarNumber.setTypeface(tf);
 
+            holder.tvName.setText(customer.strName);
+            holder.tvTime.setText(mAm.format(customer.dtReserveTime) + " 예정");
+            holder.tvLocation.setText(customer.strLocation);
+            holder.tvCarModel.setText(customer.strCarModel);
+            holder.tvCarNumber.setText(customer.strCarModel);
 
             return convertView;
         }
@@ -173,6 +178,7 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
     protected  void onResume() {
 
         super.onResume();
+        CaApplication.m_Engine.GetDriverHomeInfo(CaApplication.m_Info.strId,this,this);
 
     }
 
@@ -221,37 +227,42 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
         }
 
         switch (Result.m_nCallback) {
-            case CaEngine.GET_STATION_INFO: {
-                Log.i("MAP" , "GetStationInfo called");
+            case CaEngine.GET_DRIVE_HOME_INFO: {
+
                 try {
+                    Log.i("LOGIN", "GetHomeInfo Called...");
                     JSONObject jo = Result.object;
-                    JSONArray ja = jo.getJSONArray("features");
 
-                    CaApplication.m_Info.alStation.clear();
-
-                    for(int i=0;i<ja.length();i++){
-                        JSONObject joStation = ja.getJSONObject(i);
-                        CaStation station = new CaStation();
-                        JSONObject joGeometry = joStation.getJSONObject("geometry");
-                        JSONObject joProperties = joStation.getJSONObject("properties");
-
-                        //JSONObject joGeometry = jaGeometry.getJSONObject(0);
-                        JSONArray jaDxy =joGeometry.getJSONArray("coordinates");
-                        station.dx = jaDxy.getDouble(0);
-                        station.dy = jaDxy.getDouble(1);
-
-
-                        //JSONObject joProperties = jaProperties.getJSONObject(0);
-                        station.nFastCharger = joProperties.getInt("fast_charger");
-                        station.nSlowCharger = joProperties.getInt("slow_charger");
-                        station.nStationId = joProperties.getInt("station_id");
-                        station.strStationName = joProperties.getString("station_name");
-                        station.nV2gCharger = joProperties.getInt("v2g");
-                        Log.i("MAP", "StationNAme = " +station.strStationName  + " " + station.dx + " " +station.dy);
-                        CaApplication.m_Info.alStation.add(station);
+                    if(jo.getJSONArray("list_history").length() == 0){
+                       tvRemain.setText("0");
                     }
-                    Intent it = new Intent(this, ActivityMap.class);
-                    startActivity(it);
+                    else{
+                        JSONArray ja = jo.getJSONArray("features");
+
+                        CaApplication.m_Info.alCustomer.clear();
+
+                        for(int i=0;i<ja.length();i++){
+                            JSONObject joCustomer = ja.getJSONObject(i);
+                            CaCustomer customer = new CaCustomer();
+
+                            customer.nReserveId = joCustomer.getInt("reserve_id");
+                            customer.dtReserveTime= CaApplication.m_Info.parseDate(joCustomer.getString("reserve_time"));
+                            customer.strLocation = joCustomer.getString("location");
+                            customer.strCarModel = joCustomer.getString("car_model_name");
+                            customer.strCarNumber = joCustomer.getString("car_number");
+                            customer.strNotice = joCustomer.getString("notice");
+                            customer.strName = joCustomer.getString("customer_name");
+                            customer.strPhone = joCustomer.getString("customer_phone");
+
+                            CaApplication.m_Info.alCustomer.add(customer);
+                        }
+                        tvRemain.setText(CaApplication.m_Info.alCustomer.size());
+                        Intent it = new Intent(this, ActivityDriverHome.class);
+                        startActivity(it);
+
+                    }
+
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -55,6 +55,7 @@ public class ActivitySignUpPreferTime extends AppCompatActivity implements IaRes
                     dlg.show();
                 }
                 else{
+                    CaApplication.m_Info.nTimeType = Integer.parseInt(strHour);
                     Intent it = new Intent(this, ActivitySignUpPreferStation.class);
                     startActivity(it);
                 }

@@ -18,7 +18,10 @@ import com.example.lego.CaPref;
 import com.example.lego.CaResult;
 import com.example.lego.IaResultHandler;
 import com.example.lego.R;
+import com.example.lego.model.CaCustomer;
+import com.example.lego.model.CaStation;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -122,15 +125,22 @@ public class ActivityLogin extends AppCompatActivity implements IaResultHandler 
                         m_Pref.setValue(CaPref.PREF_MEMBER_ID, m_strMemberId);
                         m_Pref.setValue(CaPref.PREF_PASSWORD, m_strPassword);
 
-
-
                         CaApplication.m_Info.strId = m_strMemberId;
                         CaApplication.m_Info.strPassword = m_strPassword;
 
                         CaApplication.m_Engine.GetHomeInfo(m_strMemberId, this,this);
 
 
-                    } else {
+                    }
+                    else if (nResultCode == 2) {
+                        m_Pref.setValue(CaPref.PREF_MEMBER_ID, m_strMemberId);
+                        m_Pref.setValue(CaPref.PREF_PASSWORD, m_strPassword);
+
+                        CaApplication.m_Info.strId = m_strMemberId;
+                        CaApplication.m_Info.strPassword = m_strPassword;
+                        CaApplication.m_Engine.GetDriverHomeInfo(m_strMemberId, this,this);
+                    }
+                    else {
                         AlertDialog.Builder dlg = new AlertDialog.Builder(ActivityLogin.this);
                         dlg.setMessage("아이디와 비밀번호를 확인해주세요");
                         dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -151,27 +161,15 @@ public class ActivityLogin extends AppCompatActivity implements IaResultHandler 
                     Log.i("LOGIN", "GetHomeInfo Called...");
                     JSONObject jo = Result.object;
                     CaApplication.m_Info.strName = jo.getString("name");
-                    CaApplication.m_Info.strCarModel = jo.getString("car_model_name");
-                    if(!jo.getString("efficiency").equals("정보없음")){
+
+                    if(!jo.getString("strCarModel").equals("정보없음")){
                         CaApplication.m_Info.dEfficiency = jo.getDouble("efficiency");
+                        CaApplication.m_Info.strCarModel = jo.getString("car_model_name");
+                        CaApplication.m_Info.dBatteryCapacity = jo.getDouble("battery_capacity");
+                        CaApplication.m_Info.nCurrentCap = jo.getInt("current_capacity");
                     }
-                    CaApplication.m_Info.dBatteryCapacity = jo.getDouble("battery_capacity");
-                    CaApplication.m_Info.bPaid = jo.getInt("is_paid");
 
-                    if(CaApplication.m_Info.bPaid != -1){
-                        CaApplication.m_Info.nServiceReservation = jo.getString("service_reservation_id");
-                        CaApplication.m_Info.dtStart = CaApplication.m_Info.parseDate(jo.getString("start_time"));
-                        CaApplication.m_Info.dtEnd = CaApplication.m_Info.parseDate(jo.getString("finish_time"));
-                        CaApplication.m_Info.strStationName = jo.getString("station_name");
-                        CaApplication.m_Info.nReserveType = jo.getInt("reserve_type");
-                        if (jo.isNull("minimum_capacity")) {
-                            //Usage.m_dUsage=0.0;
-                            CaApplication.m_Info.nMinCapacity = 0;
-                        } else {
-                            CaApplication.m_Info.nMinCapacity = jo.getInt("minimum_capacity");
-                        }
-
-                    }
+                    CaApplication.m_Engine.GetScheduleInfo(CaApplication.m_Info.strId,this,this);
                     Intent it = new Intent(this, ActivityHome.class);
                     startActivity(it);
 
@@ -181,6 +179,64 @@ public class ActivityLogin extends AppCompatActivity implements IaResultHandler 
                 }
             }
             break;
+
+            case CaEngine.GET_SCHEDULE_INFO: {
+
+                try {
+                    Log.i("LOGIN", "GetSchedule Called...");
+                    JSONObject jo = Result.object;
+
+                    if(!jo.getString("charge_time").equals("정보없음")){
+                        CaApplication.m_Info.PreferBattery = jo.getInt("prefer_battery");
+                        CaApplication.m_Info.MinBatteryTime= CaApplication.m_Info.parseDate(jo.getString("min_battery_time"));
+                        CaApplication.m_Info.ChargeTime = CaApplication.m_Info.parseDate(jo.getString("charge_time"));
+                    }
+
+                    CaApplication.m_Engine.GetScheduleInfo(CaApplication.m_Info.strId,this,this);
+                    Intent it = new Intent(this, ActivityHome.class);
+                    startActivity(it);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            break;
+
+            case CaEngine.GET_DRIVE_HOME_INFO: {
+
+                try {
+                    Log.i("LOGIN", "GetHomeInfo Called...");
+                    JSONObject jo = Result.object;
+                    JSONArray ja = jo.getJSONArray("features");
+
+                    CaApplication.m_Info.alCustomer.clear();
+
+                    for(int i=0;i<ja.length();i++){
+                        JSONObject joCustomer = ja.getJSONObject(i);
+                        CaCustomer customer = new CaCustomer();
+
+                        customer.nReserveId = joCustomer.getInt("reserve_id");
+                        customer.dtReserveTime= CaApplication.m_Info.parseDate(joCustomer.getString("reserve_time"));
+                        customer.strLocation = joCustomer.getString("location");
+                        customer.strCarModel = joCustomer.getString("car_model_name");
+                        customer.strCarNumber = joCustomer.getString("car_number");
+                        customer.strNotice = joCustomer.getString("notice");
+                        customer.strName = joCustomer.getString("customer_name");
+                        customer.strPhone = joCustomer.getString("customer_phone");
+
+                        CaApplication.m_Info.alCustomer.add(customer);
+                    }
+                    Intent it = new Intent(this, ActivityDriverHome.class);
+                    startActivity(it);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            break;
+
 
 
 

@@ -5,22 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lego_main_color"
-    tools:context=".activity.ActivitySignUpPreferBattery">
+    tools:context=".activity.ActivityChargeTime">
 
     <EditText
-        android:id="@+id/et_battery"
-        android:layout_width="70dp"
+        android:id="@+id/et_charge"
+        android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginStart="27dp"
         android:layout_marginEnd="27dp"
         android:ems="10"
-        android:hint="19"
+        android:gravity="center"
+        android:hint="2021-12-13 11:00"
         android:inputType="textPersonName"
         android:textColor="@color/ks_gray"
-        android:textSize="48dp"
+        android:textSize="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.264"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.419" />
@@ -46,7 +47,7 @@
         android:layout_marginTop="45dp"
         android:gravity="center_horizontal|left"
         android:lineSpacingExtra="8sp"
-        android:text="선호하는 최저 배터리 잔량을\n알려주세요"
+        android:text="마지막으로 충전을 완료하신\n시간을 알려주세요."
         android:textColor="@color/ks_gray"
         android:textSize="22dp"
         android:textStyle="bold"
@@ -54,18 +55,19 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_back" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
         android:gravity="center_horizontal|left"
         android:lineSpacingExtra="8sp"
-        android:text="%"
+        android:text="LeGO가 고객님의 충전 결과를 이용한 빅데이터\n분석을 통해 최적의 충전 시기를 예측합니다."
         android:textColor="@color/ks_gray"
-        android:textSize="22dp"
+        android:textSize="14dp"
         android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="@+id/et_battery"
-        app:layout_constraintStart_toEndOf="@+id/et_battery" />
+        app:layout_constraintStart_toStartOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     <Button
         android:id="@+id/btn_next"
@@ -76,7 +78,7 @@
         android:layout_marginBottom="109dp"
         android:background="@drawable/shape_round_corner_cyan_light_filled"
         android:onClick="onClick"
-        android:text="다음"
+        android:text="완료"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

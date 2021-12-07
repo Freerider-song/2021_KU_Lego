@@ -1,6 +1,7 @@
 package com.example.lego;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 
 public class CaEngine {
@@ -21,6 +22,15 @@ public class CaEngine {
     public static final int SET_RESERVE_INFO = 1011;
     public static final int SET_SERVICE_PAID = 1012;
     public static final int GET_FEE_INFO = 1013;
+
+    public static final int SET_CAR_INFO = 1014;
+    public static final int SET_CHARGE_COMPLETE_INFO = 1015;
+    public static final int GET_SCHEDULE_INFO = 1016;
+    public static final int SET_SUB_INFO = 1017;
+    public static final int GET_SUB_INFO = 1018;
+    public static final int GET_DRIVE_HOME_INFO = 1019;
+    public static final int SET_PICK_UP_INFO = 1020;
+    public static final int SET_SUB_COMPLETE_INFO = 1021;
 
 
     public static final int AUTH_TYPE_UNKNOWN = 1000;
@@ -103,12 +113,13 @@ public class CaEngine {
         executeCommand(Arg, GET_CAR_MODEL_INFO, false, true, Ctx, ResultHandler);
     }
 
-    public void SetSignUpInfo(String Name, String Id,String Password,int CarModelId,Context Ctx, IaResultHandler ResultHandler){
+    public void SetSignUpInfo(String Name, String Id,String Password,String Phone,Context Ctx, IaResultHandler ResultHandler){
         Log.i("ENGINE", "SetSignUpInfo called");
 
         CaArg Arg = new CaArg("SetSignUpInfo", NO_CMD_ARGS, null);
-        Arg.addArg("Car_model", CarModelId);
+
         Arg.addArg("Name", Name);
+        Arg.addArg("Phone", Phone);
         Arg.addArg("Id", Id);
         Arg.addArg("Password", Password);
 
@@ -198,6 +209,97 @@ public class CaEngine {
         CaArg Arg = new CaArg("GetFeeInfo", NO_CMD_ARGS, null);
 
         executeCommand(Arg, GET_FEE_INFO, false, true, Ctx, ResultHandler);
+    }
+
+    public void SetCarInfo(String Id, int CarModelId, int PreferBattery, String CarNumber, int TimeType, int Station0, int Station1, int Station2,Context Ctx, IaResultHandler ResultHandler){
+        Log.i("ENGINE", "GetStationInfo called");
+
+        CaArg Arg = new CaArg("SetCarInfo", NO_CMD_ARGS, null);
+        Arg.addArg("Id", Id);
+        Arg.addArg("Car_model_id", CarModelId);
+        Arg.addArg("Car_number", CarNumber);
+        Arg.addArg("Time_type", TimeType);
+        Arg.addArg("Prefer_battery", PreferBattery);
+        Arg.addArg("Station_0", Station0);
+        Arg.addArg("Station_1", Station1);
+        Arg.addArg("Station_2", Station2);
+
+        executeCommand(Arg, SET_CAR_INFO, false, true, Ctx, ResultHandler);
+    }
+
+    public void SetChargeCompleteInfo(String Id, String CompleteTime, Context Ctx, IaResultHandler ResultHandler){
+        Log.i("ENGINE", "GetStationInfo called");
+
+        CaArg Arg = new CaArg("SetChargeCompleteInfo", NO_CMD_ARGS, null);
+        Arg.addArg("Id", Id);
+        Arg.addArg("Complete_time", CompleteTime);
+
+
+        executeCommand(Arg, SET_CHARGE_COMPLETE_INFO, false, true, Ctx, ResultHandler);
+    }
+
+    public void GetScheduleInfo(String Id, Context Ctx, IaResultHandler ResultHandler){
+        Log.i("ENGINE", "GetStationInfo called");
+
+        CaArg Arg = new CaArg("GetScheduleInfo", NO_CMD_ARGS, null);
+        Arg.addArg("Id", Id);
+
+
+        executeCommand(Arg, GET_SCHEDULE_INFO, false, true, Ctx, ResultHandler);
+    }
+
+    public void GetSubInfo(String Id, Context Ctx, IaResultHandler ResultHandler){
+        Log.i("ENGINE", "GetStationInfo called");
+
+        CaArg Arg = new CaArg("GetSubInfo", NO_CMD_ARGS, null);
+        Arg.addArg("Id", Id);
+
+
+        executeCommand(Arg, GET_SUB_INFO, false, true, Ctx, ResultHandler);
+    }
+
+    public void SetSubInfo(String Id, String ReserveTime, String Location, String Notice,Context Ctx, IaResultHandler ResultHandler){
+        Log.i("ENGINE", "GetStationInfo called");
+
+        CaArg Arg = new CaArg("SetSubInfo", NO_CMD_ARGS, null);
+        Arg.addArg("Id", Id);
+        Arg.addArg("Reserve_time", ReserveTime);
+        Arg.addArg("Location", Location);
+        Arg.addArg("Notice", Notice);
+
+        executeCommand(Arg, SET_SUB_INFO, false, true, Ctx, ResultHandler);
+    }
+
+    public void GetDriverHomeInfo(String Id, Context Ctx, IaResultHandler ResultHandler){
+        Log.i("ENGINE", "GetStationInfo called");
+
+        CaArg Arg = new CaArg("GetDriverHomeInfo", NO_CMD_ARGS, null);
+        Arg.addArg("Id", Id);
+
+
+        executeCommand(Arg, GET_DRIVE_HOME_INFO, false, true, Ctx, ResultHandler);
+    }
+
+    public void SetPickUpInfo(int ReservationId, String PickUpTime, Context Ctx, IaResultHandler ResultHandler){
+        Log.i("ENGINE", "GetStationInfo called");
+
+        CaArg Arg = new CaArg("SetPickUpInfo", NO_CMD_ARGS, null);
+        Arg.addArg("Reservation_id", ReservationId);
+        Arg.addArg("Pick_up_time", PickUpTime);
+
+
+        executeCommand(Arg, SET_PICK_UP_INFO, false, true, Ctx, ResultHandler);
+    }
+
+    public void SetSubCompleteInfo(int ReservationId, String CompleteTime, Context Ctx, IaResultHandler ResultHandler){
+        Log.i("ENGINE", "GetStationInfo called");
+
+        CaArg Arg = new CaArg("SetSubCompleteInfo", NO_CMD_ARGS, null);
+        Arg.addArg("Reservation_id", ReservationId);
+        Arg.addArg("complete_time", CompleteTime);
+
+
+        executeCommand(Arg, SET_SUB_COMPLETE_INFO, false, true, Ctx, ResultHandler);
     }
 
 

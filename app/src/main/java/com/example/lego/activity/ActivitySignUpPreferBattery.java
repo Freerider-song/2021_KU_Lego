@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.lego.CaApplication;
 import com.example.lego.CaEngine;
 import com.example.lego.CaResult;
 import com.example.lego.IaResultHandler;
@@ -20,14 +21,14 @@ import org.json.JSONObject;
 
 public class ActivitySignUpPreferBattery extends AppCompatActivity implements IaResultHandler {
 
-    EditText etHour, etMinute;
+    EditText etBattery;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_prefer_battery);
 
-        etHour = findViewById(R.id.et_hour);
-        etMinute = findViewById(R.id.et_minute);
+        etBattery = findViewById(R.id.et_battery);
+
     }
 
     public void onClick(View v) {
@@ -37,13 +38,13 @@ public class ActivitySignUpPreferBattery extends AppCompatActivity implements Ia
             }
             break;
             case R.id.btn_next: {
-                String strHour = etHour.getText().toString();
-                String strMinute = etMinute.getText().toString();
+                String strBattery = etBattery.getText().toString();
 
-                if (strHour.isEmpty() || strMinute.isEmpty()) {
+
+                if (strBattery.isEmpty()) {
                     AlertDialog.Builder dlg = new AlertDialog.Builder(ActivitySignUpPreferBattery.this);
                     //dlg.setTitle("경고"); //제목
-                    dlg.setMessage("선호하는 시각을 입력해주세요"); // 메시지
+                    dlg.setMessage("최저 배터리 잔량을 입력해주세요"); // 메시지
                     //dlg.setIcon(R.drawable.deum); // 아이콘 설정
 //                버튼 클릭시 동작
 
@@ -54,8 +55,13 @@ public class ActivitySignUpPreferBattery extends AppCompatActivity implements Ia
                     dlg.show();
                 }
                 else{
-                    Intent it = new Intent(this, ActivitySignUpCarEnd.class);
-                    startActivity(it);
+                    CaApplication.m_Info.nMinCapacity = Integer.parseInt(strBattery);
+                    CaApplication.m_Engine.SetCarInfo(CaApplication.m_Info.strId,CaApplication.m_Info.nModelId,
+                            CaApplication.m_Info.nMinCapacity,CaApplication.m_Info.strCarNumber, CaApplication.m_Info.nTimeType,
+                            CaApplication.m_Info.Station0, CaApplication.m_Info.Station1,
+                            CaApplication.m_Info.Station2, this, this);
+
+
                 }
 
             }
@@ -79,7 +85,7 @@ public class ActivitySignUpPreferBattery extends AppCompatActivity implements Ia
         }
 
         switch (Result.m_nCallback) {
-            case CaEngine.SET_SIGN_UP_INFO: {
+            case CaEngine.SET_CAR_INFO: {
 
                 try {
                     JSONObject jo = Result.object;
@@ -87,12 +93,12 @@ public class ActivitySignUpPreferBattery extends AppCompatActivity implements Ia
 
                     if (nResultCode == 1) {
 
-                        Intent it = new Intent(this, ActivitySignUpComplete.class);
+                        Intent it = new Intent(this, ActivitySignUpCarEnd.class);
                         startActivity(it);
 
                     } else {
                         AlertDialog.Builder dlg = new AlertDialog.Builder(ActivitySignUpPreferBattery.this);
-                        dlg.setMessage("회원가입이 정상적으로 진행되지 않았습니다. 처음부터 다시 진행해주세요");
+                        dlg.setMessage("정보 입력이 정상적으로 진행되지 않았습니다. 처음부터 다시 진행해주세요");
                         dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                             }

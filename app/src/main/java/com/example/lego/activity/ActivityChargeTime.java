@@ -1,7 +1,5 @@
 package com.example.lego.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,7 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-//import com.example.kuime.ActivityLogin;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.lego.CaApplication;
 import com.example.lego.CaEngine;
 import com.example.lego.CaResult;
@@ -20,15 +19,15 @@ import com.example.lego.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ActivitySignUpCarNum extends AppCompatActivity implements IaResultHandler {
+public class ActivityChargeTime extends AppCompatActivity implements IaResultHandler {
 
-    EditText etCarNum;
+    EditText etCharge;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_car_num);
+        setContentView(R.layout.activity_charge_time);
 
-        etCarNum = findViewById(R.id.et_car_num);
+        etCharge = findViewById(R.id.et_charge);
 
     }
 
@@ -39,19 +38,25 @@ public class ActivitySignUpCarNum extends AppCompatActivity implements IaResultH
             }
             break;
             case R.id.btn_next: {
-                String strCarNum = etCarNum.getText().toString();
-                if(strCarNum.equals("")){
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(ActivitySignUpCarNum.this);
-                    dlg.setMessage("차량번호가 입력되지 않았습니다.");
-                    dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                String strChargeTime = etCharge.getText().toString();
+
+
+                if (strChargeTime.isEmpty()) {
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(ActivityChargeTime.this);
+                    //dlg.setTitle("경고"); //제목
+                    dlg.setMessage("충전 완료 시각을 입력해주세요"); // 메시지
+                    //dlg.setIcon(R.drawable.deum); // 아이콘 설정
+//                버튼 클릭시 동작
+
+                    dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int which) {
                         }
                     });
                     dlg.show();
                 }
                 else{
-                    CaApplication.m_Info.strCarNumber = strCarNum;
-                    Intent it = new Intent(this, ActivitySignUpPreferTime.class);
+                    CaApplication.m_Engine.SetChargeCompleteInfo(CaApplication.m_Info.strId, strChargeTime,this,this);
+                    Intent it = new Intent(this, ActivityHome.class);
                     startActivity(it);
                 }
 
@@ -88,7 +93,7 @@ public class ActivitySignUpCarNum extends AppCompatActivity implements IaResultH
                         startActivity(it);
 
                     } else {
-                        AlertDialog.Builder dlg = new AlertDialog.Builder(ActivitySignUpCarNum.this);
+                        AlertDialog.Builder dlg = new AlertDialog.Builder(ActivityChargeTime.this);
                         dlg.setMessage("회원가입이 정상적으로 진행되지 않았습니다. 처음부터 다시 진행해주세요");
                         dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

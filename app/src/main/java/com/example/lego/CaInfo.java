@@ -1,6 +1,7 @@
 package com.example.lego;
 
 
+import com.example.lego.model.CaCustomer;
 import com.example.lego.model.CaStation;
 
 import java.text.DecimalFormat;
@@ -41,6 +42,8 @@ public class CaInfo {
     public Date m_dtModified=null;
     public Date m_dtChangePassword =null;
 
+
+
     public int nPoint = 0;
 
     //
@@ -53,11 +56,21 @@ public class CaInfo {
     public String strId="";
     public String strPassword="";
     public String strName = "";
+    public String strPhone = "";
 
     public String strCarCompany = "";
     public String strCarModel = "";
     public String strCarNumber = "";
     public int nModelId = 0;
+
+    public int nTimeType = 0;
+    public int Station0= 0;
+    public int Station1 = 0;
+    public int Station2= 0;
+
+    public Date MinBatteryTime =null;
+    public Date ChargeTime = null;
+    public int PreferBattery = 20;
 
     public String strStationName = "";
     public int nStationId = 0;
@@ -90,6 +103,7 @@ public class CaInfo {
     public boolean bCarRegistered = false;
 
     public ArrayList<CaStation> alStation = new ArrayList<>();
+    public ArrayList<CaCustomer> alCustomer = new ArrayList<>();
     /*
     public int m_nAuthType=CaEngine.AUTH_TYPE_UNKNOWN;
 

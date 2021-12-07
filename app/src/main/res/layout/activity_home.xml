@@ -57,6 +57,22 @@
                 app:layout_constraintTop_toBottomOf="@+id/cl_charge_history">
 
                 <Button
+                    android:id="@+id/btn_charge_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="25dp"
+                    android:backgroundTint="@color/white"
+                    android:gravity="left"
+                    android:lineSpacingExtra="6dp"
+                    android:onClick="onClick"
+                    android:text="마지막으로 충전한\n시간을 알려주세요!"
+                    android:textColor="@color/bright_blue"
+                    android:textSize="14dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_guide2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_guide2" />
+
+                <Button
                     android:id="@+id/btn_station"
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
@@ -78,8 +94,7 @@
                     android:layout_marginTop="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_guide2
-"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_guide2"
                     app:srcCompat="@drawable/gray_bar" />
 
                 <ImageView
@@ -89,16 +104,14 @@
                     android:layout_marginTop="70dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_guide
-"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_guide"
                     app:srcCompat="@drawable/gray_bar" />
 
                 <TextView
-                    android:id="@+id/tv_guide2
-"
+                    android:id="@+id/tv_guide2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="23dp"
+                    android:layout_marginStart="28dp"
                     android:layout_marginTop="28dp"
                     android:lineSpacingExtra="8dp"
                     android:text="12월 04일\n오늘의 충전 스케줄링"
@@ -109,8 +122,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_guide
-"
+                    android:id="@+id/tv_guide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
@@ -124,8 +136,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
                 <TextView
-                    android:id="@+id/tv_guide
-2"
+                    android:id="@+id/tv_guide3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="23dp"
@@ -139,8 +150,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
                 <TextView
-                    android:id="@+id/tv_guide
-3"
+                    android:id="@+id/tv_charge_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="23dp"
@@ -152,12 +162,10 @@
                     android:textSize="18dp"
                     android:textStyle="normal|bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_guide
-2" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_guide3" />
 
                 <TextView
-                    android:id="@+id/tv_guide
-4"
+                    android:id="@+id/tv_charge_time2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="29dp"
@@ -166,10 +174,8 @@
                     android:textColor="@color/black"
                     android:textSize="14dp"
                     android:textStyle="normal"
-                    app:layout_constraintStart_toStartOf="@+id/tv_guide
-3"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_guide
-3" />
+                    app:layout_constraintStart_toStartOf="@+id/tv_charge_time"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_charge_time" />
 
                 <ImageView
                     android:id="@+id/iv_more"
