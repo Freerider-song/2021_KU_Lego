@@ -162,7 +162,7 @@ public class ActivityLogin extends AppCompatActivity implements IaResultHandler 
                     JSONObject jo = Result.object;
                     CaApplication.m_Info.strName = jo.getString("name");
 
-                    if(!jo.getString("strCarModel").equals("정보없음")){
+                    if(!jo.getString("car_model_name").equals("")){
                         CaApplication.m_Info.dEfficiency = jo.getDouble("efficiency");
                         CaApplication.m_Info.strCarModel = jo.getString("car_model_name");
                         CaApplication.m_Info.dBatteryCapacity = jo.getDouble("battery_capacity");

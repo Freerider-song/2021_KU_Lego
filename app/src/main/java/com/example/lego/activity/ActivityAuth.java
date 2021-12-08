@@ -56,6 +56,7 @@ public class ActivityAuth extends AppCompatActivity implements IaResultHandler {
                 }
                 else {
                     CaApplication.m_Info.strName = strName;
+                    CaApplication.m_Info.strPhone = strPhone;
                     Intent it = new Intent(this, ActivitySignUp.class);
                     startActivity(it);
                 }

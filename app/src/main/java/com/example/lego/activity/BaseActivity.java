@@ -173,8 +173,8 @@ public class BaseActivity extends AppCompatActivity {
                             break;
 
                             case CaEngine.MENU_SUBSTITUTE: {
-                                //Intent it = new Intent(This, ActivityUsageDaily.class);
-                                //startActivity(it);
+                                Intent it = new Intent(This, ActivitySubstitute.class);
+                                startActivity(it);
                             }
                             break;
 

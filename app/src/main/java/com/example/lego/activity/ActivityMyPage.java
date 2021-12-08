@@ -9,25 +9,31 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //import com.example.kuime.ActivityLogin;
 import com.example.lego.CaApplication;
+import com.example.lego.CaEngine;
 import com.example.lego.CaPref;
 import com.example.lego.CaResult;
 import com.example.lego.IaResultHandler;
 import com.example.lego.R;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ActivityMyPage extends BaseActivity implements IaResultHandler {
 
     TextView tvName, tvId, tvVoucher, tvVoucherDetail, tvPhone, tvCarModel, tvCarNumber;
+    String Name, Id, Phone, CarModel, CarNumber, VoucherName, VoucherPeriod, TotalCount, PayDate, Count;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
+        CaApplication.m_Engine.GetMyPageInfo(CaApplication.m_Info.strId, this,this);
 
         prepareDrawer();
 
@@ -43,6 +49,14 @@ public class ActivityMyPage extends BaseActivity implements IaResultHandler {
         tvId.setText("     "+ CaApplication.m_Info.strId);
         tvCarModel.setText("     "+CaApplication.m_Info.strCarModel);
 
+        viewSetting();
+
+    }
+    void viewSetting(){
+        tvName.setText("     " + Name);
+        tvId.setText("     "+ Id);
+        tvCarModel.setText("     "+ CarModel);
+        tvCarNumber.setText("     " + CarNumber);
     }
 
     public void onClick(View v) {
@@ -69,6 +83,39 @@ public class ActivityMyPage extends BaseActivity implements IaResultHandler {
 
     @Override
     public void onResult(CaResult Result) throws JSONException {
+
+        if (Result.object == null) {
+            Toast.makeText(getApplicationContext(), "Check Network", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        switch (Result.m_nCallback) {
+            case CaEngine.GET_MY_PAGE_INFO: {
+
+                try {
+                    Log.i("SignUpCar", "GetCarCompanyInfo called..");
+                    JSONObject jo = Result.object;
+
+                    Name = jo.getString("name");
+                    Phone = jo.getString("phone");
+                    CarModel = jo.getString("car_model_name");
+                    CarNumber = jo.getString("car_number");
+                    Id = jo.getString("customer_id");
+
+                    viewSetting();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            break;
+
+            default: {
+                //Log.i(TAG, "Unknown type result received");
+            }
+            break;
+
+        }
 
     }
 }

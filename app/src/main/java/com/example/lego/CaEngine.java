@@ -31,6 +31,7 @@ public class CaEngine {
     public static final int GET_DRIVE_HOME_INFO = 1019;
     public static final int SET_PICK_UP_INFO = 1020;
     public static final int SET_SUB_COMPLETE_INFO = 1021;
+    public static final int GET_MY_PAGE_INFO = 1022;
 
 
     public static final int AUTH_TYPE_UNKNOWN = 1000;
@@ -113,7 +114,7 @@ public class CaEngine {
         executeCommand(Arg, GET_CAR_MODEL_INFO, false, true, Ctx, ResultHandler);
     }
 
-    public void SetSignUpInfo(String Name, String Id,String Password,String Phone,Context Ctx, IaResultHandler ResultHandler){
+    public void SetSignUpInfo(String Name, String Phone, String Id,String Password,Context Ctx, IaResultHandler ResultHandler){
         Log.i("ENGINE", "SetSignUpInfo called");
 
         CaArg Arg = new CaArg("SetSignUpInfo", NO_CMD_ARGS, null);
@@ -302,6 +303,14 @@ public class CaEngine {
         executeCommand(Arg, SET_SUB_COMPLETE_INFO, false, true, Ctx, ResultHandler);
     }
 
+    public void GetMyPageInfo(String Id ,Context Ctx, IaResultHandler ResultHandler){
+        Log.i("ENGINE", "GetFeeInfo called");
+
+        CaArg Arg = new CaArg("GetMyPageInfo", NO_CMD_ARGS, null);
+        Arg.addArg("Id",Id);
+
+        executeCommand(Arg, GET_MY_PAGE_INFO, false, true, Ctx, ResultHandler);
+    }
 
 
 
