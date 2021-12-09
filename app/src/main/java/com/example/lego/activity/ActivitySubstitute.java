@@ -35,13 +35,15 @@ public class ActivitySubstitute extends BaseActivity implements IaResultHandler 
     String strLocation;
     String strNotice;
     String strDriverName,strDriverPhone;
-    Date dtPickUp, dtComplete;
+    Date dtPickUp = null;
+    Date dtComplete= null;
+    boolean bPick = false, bCom = false;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_substitute);
-
+        CaApplication.m_Engine.GetSubInfo(CaApplication.m_Info.strId,this,this);
 
         prepareDrawer();
 
@@ -56,29 +58,33 @@ public class ActivitySubstitute extends BaseActivity implements IaResultHandler 
         tvChargeCompleteTime = findViewById(R.id.tv_charge_complete_time);
 
         tvName.setText("     " + CaApplication.m_Info.strName);
-        viewSetting();
 
     }
     public void viewSetting(){
-        tvName.setText(strDriverName);
-        tvPhone.setText(strDriverPhone);
+        tvName.setText("     "+ strDriverName);
+        tvPhone.setText("     "+ strDriverPhone);
 
 
-        tvPickupBeforeTime.setText(mFormat.format(dtReserve));
-        if(dtPickUp==null){
-            tvPickupBefore.setTextColor(getResources().getColor(R.color.bright_blue));
-            tvPickupTime.setVisibility(View.INVISIBLE);
-            tvChargeCompleteTime.setVisibility(View.INVISIBLE);
+
+        if(dtReserve!= null){
+            tvPickupBeforeTime.setText(mFormat.format(dtReserve));
+            if(!bPick){
+                tvPickupBefore.setTextColor(getResources().getColor(R.color.bright_blue));
+                tvPickupTime.setVisibility(View.INVISIBLE);
+                tvChargeCompleteTime.setVisibility(View.INVISIBLE);
+            }
+            else if(!bCom){
+                tvPickupTime.setText(mFormat.format(dtPickUp));
+                tvCharging.setTextColor(getResources().getColor(R.color.bright_blue));
+                tvChargeCompleteTime.setVisibility(View.INVISIBLE);
+            }
+            else if(bCom){
+                tvPickupTime.setText(mFormat.format(dtPickUp));
+                tvChargeComplete.setTextColor(getResources().getColor(R.color.bright_blue));
+                tvChargeCompleteTime.setText(mFormat.format(dtComplete));
+            }
         }
-        else if(dtComplete == null){
-            tvPickupTime.setText(mFormat.format(dtPickUp));
-            tvCharging.setTextColor(getResources().getColor(R.color.bright_blue));
-            tvChargeCompleteTime.setVisibility(View.INVISIBLE);
-        }
-        else{
-            tvChargeComplete.setTextColor(getResources().getColor(R.color.bright_blue));
-            tvChargeCompleteTime.setText(mFormat.format(dtComplete));
-        }
+
 
     }
 
@@ -124,25 +130,44 @@ public class ActivitySubstitute extends BaseActivity implements IaResultHandler 
             case CaEngine.GET_SUB_INFO: {
 
                 try {
-                    Log.i("LOGIN", "GetHomeInfo Called...");
+                    Log.i("Substitute", "GetSubInfo Called...");
                     JSONObject jo = Result.object;
 
-                    nReserveId= jo.getInt("reserve_id");
-                    if(!jo.getString("reserve_time").equals("")){
-                        dtReserve = CaApplication.m_Info.parseDate(jo.getString("reserve_time"));
-                    }
+                    int nResultCode= jo.getInt("result_code");
+                    if(nResultCode == 1){
+                        nReserveId= jo.getInt("reserve_id");
+                        if(!jo.isNull("location")){
+                            dtReserve = CaApplication.m_Info.parseDate(jo.getString("location"));
+                        }
 
-                    strLocation = jo.getString("location");
-                    strNotice = jo.getString("notice");
-                    strDriverName = jo.getString("driver_name");
-                    strDriverPhone = jo.getString("driver_phone");
-                    if(!jo.getString("pick_up_time").equals("")){
-                        dtPickUp = CaApplication.m_Info.parseDate(jo.getString("pick_up_time"));
+                        strLocation = jo.getString("reserve_time");
+                        strNotice = jo.getString("notice");
+                        strDriverName = jo.getString("driver_name");
+                        strDriverPhone = jo.getString("driver_phone");
+                        if(!jo.isNull("pick_up_time")){
+                            bPick = true;
+                            dtPickUp = CaApplication.m_Info.parseDate(jo.getString("pick_up_time"));
+                        }
+                        if(!jo.isNull("complete_time")){
+                            bCom = true;
+                            dtComplete = CaApplication.m_Info.parseDate(jo.getString("complete_time"));
+                        }
+                        Log.i("Substitute", "dtPickup and bPickup " + dtPickUp + bPick + " , dtComplete: " + dtComplete);
+
                     }
-                    if(!jo.getString("complete_time").equals("")){
-                        dtComplete = CaApplication.m_Info.parseDate(jo.getString("complete_time"));
+                    else{
+                        nReserveId= 0;
+                        dtReserve = null;
+                        strLocation = "";
+                        strNotice = "";
+                        strDriverName = "정보없음";
+                        strDriverPhone = "정보없음";
+                        dtPickUp = null;
+                        dtComplete = null;
+
                     }
                     viewSetting();
+
 
 
                 } catch (JSONException e) {

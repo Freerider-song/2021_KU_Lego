@@ -145,7 +145,7 @@ public class CaInfo {
         Date dt;
 
         try {
-            dt = CaApplication.m_Info.m_dfAPI.parse(str);
+            dt = CaApplication.m_Info.m_dfStd.parse(str);
         }
         catch (ParseException e) {
             // e.printStackTrace();

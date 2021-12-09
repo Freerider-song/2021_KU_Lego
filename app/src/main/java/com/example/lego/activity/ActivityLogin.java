@@ -118,6 +118,7 @@ public class ActivityLogin extends AppCompatActivity implements IaResultHandler 
             case CaEngine.CB_CHECK_BLD_LOGIN: {
 
                 try {
+                    Log.i("LOGIN", "CheckLogin Called...");
                     JSONObject jo = Result.object;
                     int nResultCode = jo.getInt("result_code");
 
@@ -162,7 +163,7 @@ public class ActivityLogin extends AppCompatActivity implements IaResultHandler 
                     JSONObject jo = Result.object;
                     CaApplication.m_Info.strName = jo.getString("name");
 
-                    if(!jo.getString("car_model_name").equals("")){
+                    if(!jo.getString("car_model_name").equals("정보없음")){
                         CaApplication.m_Info.dEfficiency = jo.getDouble("efficiency");
                         CaApplication.m_Info.strCarModel = jo.getString("car_model_name");
                         CaApplication.m_Info.dBatteryCapacity = jo.getDouble("battery_capacity");
@@ -170,8 +171,7 @@ public class ActivityLogin extends AppCompatActivity implements IaResultHandler 
                     }
 
                     CaApplication.m_Engine.GetScheduleInfo(CaApplication.m_Info.strId,this,this);
-                    Intent it = new Intent(this, ActivityHome.class);
-                    startActivity(it);
+
 
 
                 } catch (JSONException e) {
@@ -192,7 +192,6 @@ public class ActivityLogin extends AppCompatActivity implements IaResultHandler 
                         CaApplication.m_Info.ChargeTime = CaApplication.m_Info.parseDate(jo.getString("charge_time"));
                     }
 
-                    CaApplication.m_Engine.GetScheduleInfo(CaApplication.m_Info.strId,this,this);
                     Intent it = new Intent(this, ActivityHome.class);
                     startActivity(it);
 

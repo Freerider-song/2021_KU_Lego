@@ -127,7 +127,8 @@ public class ActivitySignUp extends AppCompatActivity implements IaResultHandler
                     JSONObject jo = Result.object;
                     int nResultCode = jo.getInt("result_code");
                     if(nResultCode == 1){
-                        Intent it = new Intent(this, ActivitySignUpCar.class);
+
+                        Intent it = new Intent(this, ActivitySignUpComplete.class);
                         startActivity(it);
                     }
 

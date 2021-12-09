@@ -250,7 +250,7 @@ public class CaEngine {
     }
 
     public void GetSubInfo(String Id, Context Ctx, IaResultHandler ResultHandler){
-        Log.i("ENGINE", "GetStationInfo called");
+        Log.i("ENGINE", "GetSubInfo called");
 
         CaArg Arg = new CaArg("GetSubInfo", NO_CMD_ARGS, null);
         Arg.addArg("Id", Id);
@@ -260,7 +260,7 @@ public class CaEngine {
     }
 
     public void SetSubInfo(String Id, String ReserveTime, String Location, String Notice,Context Ctx, IaResultHandler ResultHandler){
-        Log.i("ENGINE", "GetStationInfo called");
+        Log.i("ENGINE", "SetSubInfo called");
 
         CaArg Arg = new CaArg("SetSubInfo", NO_CMD_ARGS, null);
         Arg.addArg("Id", Id);

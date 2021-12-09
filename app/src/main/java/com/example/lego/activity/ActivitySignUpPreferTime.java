@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,7 +16,9 @@ import com.example.lego.CaEngine;
 import com.example.lego.CaResult;
 import com.example.lego.IaResultHandler;
 import com.example.lego.R;
+import com.example.lego.model.CaStation;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -56,8 +59,8 @@ public class ActivitySignUpPreferTime extends AppCompatActivity implements IaRes
                 }
                 else{
                     CaApplication.m_Info.nTimeType = Integer.parseInt(strHour);
-                    Intent it = new Intent(this, ActivitySignUpPreferStation.class);
-                    startActivity(it);
+                    CaApplication.m_Engine.GetStationInfo(this,this);
+
                 }
 
             }
@@ -81,6 +84,46 @@ public class ActivitySignUpPreferTime extends AppCompatActivity implements IaRes
         }
 
         switch (Result.m_nCallback) {
+            case CaEngine.GET_STATION_INFO: {
+                Log.i("MAP" , "GetStationInfo called");
+                try {
+                    JSONObject jo = Result.object;
+                    JSONArray ja = jo.getJSONArray("features");
+
+                    CaApplication.m_Info.alStation.clear();
+
+                    for(int i=0;i<ja.length();i++){
+                        JSONObject joStation = ja.getJSONObject(i);
+                        CaStation station = new CaStation();
+                        JSONObject joGeometry = joStation.getJSONObject("geometry");
+                        JSONObject joProperties = joStation.getJSONObject("properties");
+
+                        //JSONObject joGeometry = jaGeometry.getJSONObject(0);
+                        JSONArray jaDxy =joGeometry.getJSONArray("coordinates");
+                        station.dx = jaDxy.getDouble(0);
+                        station.dy = jaDxy.getDouble(1);
+
+
+                        //JSONObject joProperties = jaProperties.getJSONObject(0);
+                        station.nFastCharger = joProperties.getInt("fast_charger");
+                        station.nSlowCharger = joProperties.getInt("slow_charger");
+                        station.nStationId = joProperties.getInt("station_id");
+                        station.strStationName = joProperties.getString("station_name");
+                        station.nV2gCharger = joProperties.getInt("v2g");
+                        Log.i("MAP", "StationNAme = " +station.strStationName  + " " + station.dx + " " +station.dy);
+                        CaApplication.m_Info.alStation.add(station);
+
+                        Intent it = new Intent(this, ActivitySignUpPreferStation.class);
+                        startActivity(it);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            break;
+
             case CaEngine.SET_SIGN_UP_INFO: {
 
                 try {

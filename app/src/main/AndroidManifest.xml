@@ -14,16 +14,15 @@
     <application
         android:name=".CaApplication"
         android:allowBackup="true"
-        android:icon="@drawable/kuime_logo"
+        android:icon="@drawable/lego_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Kuime.NoActionBar"
+        android:theme="@style/Theme.Lego.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ActivityDriverSub"></activity>
         <activity
             android:name=".activity.ActivitySubstituteRequest"
-            android:exported="false" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ActivityFee"
             android:screenOrientation="portrait" />
@@ -78,9 +77,6 @@
             android:name=".activity.ActivitySignUpComplete"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ActivitySignUpCard"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.ActivitySignUpCar"
             android:screenOrientation="portrait" />
         <activity
@@ -92,6 +88,7 @@
         <activity
             android:name=".activity.ActivityHome"
             android:screenOrientation="portrait" />
+
         <activity android:name=".activity.ActivitySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -101,6 +98,34 @@
         </activity>
         <activity
             android:name=".activity.ActivityLogin"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.ActivityChargeTime"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityDriverHome"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityDriverSub"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivitySignUpCarEnd"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivitySignUpCarNum"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivitySignUpPreferBattery"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivitySignUpPreferStation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivitySignUpPreferTime"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivitySubstitute"
             android:screenOrientation="portrait" />
     </application>
 

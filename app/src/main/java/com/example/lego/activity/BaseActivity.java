@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -62,6 +63,14 @@ public class BaseActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        View view = getWindow().getDecorView();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(view!=null){
+                view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().setStatusBarColor(Color.parseColor("#F8F8F8"));
+            }
+        }
+
     }
 
     private void setGlobalFont(View view) {
@@ -110,46 +119,50 @@ public class BaseActivity extends AppCompatActivity {
         PrimaryDrawerItem itemHome = new PrimaryDrawerItem();
         itemHome.withIdentifier(CaEngine.MENU_HOME);
         itemHome.withName("홈");
-        itemHome.withTextColor(Color.rgb(255, 255, 255));
+        itemHome.withTypeface(mTypeface);
+        itemHome.withTextColor(Color.rgb(0, 0, 0));
         itemHome.withSelectable(false);
         //itemUsage.withIcon(R.drawable.menu_usage);
         //itemUsage.withDescription("우리집 전기 사용");
-        itemHome.withDescriptionTextColor(Color.rgb(255, 255, 255));
+        itemHome.withDescriptionTextColor(Color.rgb(0, 0, 0));
 
         PrimaryDrawerItem itemSubstitute = new PrimaryDrawerItem();
         itemSubstitute.withIdentifier(CaEngine.MENU_SUBSTITUTE);
         itemSubstitute.withName("대리충전 서비스");
-        itemSubstitute.withTextColor(Color.rgb(255, 255, 255));
+        itemSubstitute.withTextColor(Color.rgb(0, 0, 0));
         itemSubstitute.withSelectable(false);
+        itemSubstitute.withTypeface(mTypeface);
         //temAlarm.withIcon(R.drawable.menu_alarm);
 
         PrimaryDrawerItem itemMypage = new PrimaryDrawerItem();
         itemMypage.withIdentifier(CaEngine.MENU_MYPAGE);
         itemMypage.withName("내정보");
-        itemMypage.withTextColor(Color.rgb(255, 255, 255));
+        itemMypage.withTextColor(Color.rgb(0, 0, 0));
         itemMypage.withSelectable(false);
+        itemMypage.withTypeface(mTypeface);
         //itemSiteState.withIcon(R.drawable.menu_site_state);
 
         PrimaryDrawerItem itemPay = new PrimaryDrawerItem();
         itemPay.withIdentifier(CaEngine.MENU_PAY);
         itemPay.withName("결제 관리");
-        itemPay.withTextColor(Color.rgb(255, 255, 255));
+        itemPay.withTextColor(Color.rgb(0, 0, 0));
         itemPay.withSelectable(false);
+        itemPay.withTypeface(mTypeface);
         //itemNotice.withIcon(R.drawable.menu_notice);
 
         PrimaryDrawerItem itemSetting = new PrimaryDrawerItem();
         itemSetting.withIdentifier(CaEngine.MENU_SETTING);
         itemSetting.withName("설정");
-        itemSetting.withTextColor(Color.rgb(255, 255, 255));
+        itemSetting.withTextColor(Color.rgb(0, 0, 0));
         itemSetting.withSelectable(false);
-        itemSetting.withIcon(R.drawable.menu_setting);
+        itemSetting.withTypeface(mTypeface);
 
         PrimaryDrawerItem itemLogout = new PrimaryDrawerItem();
         itemLogout.withIdentifier(CaEngine.MENU_LOGOUT);
         itemLogout.withName("로그아웃");
-        itemLogout.withTextColor(Color.rgb(255, 255, 255));
+        itemLogout.withTextColor(Color.rgb(0, 0, 0));
         itemLogout.withSelectable(false);
-        itemLogout.withIcon(R.drawable.menu_logout);
+        itemLogout.withTypeface(mTypeface);
 
         final BaseActivity This=this;
         final Context Ctx=getApplicationContext();
@@ -158,7 +171,8 @@ public class BaseActivity extends AppCompatActivity {
                 .withActivity(this).withSliderBackgroundColor(getResources().getColor(R.color.lego_side_menu)).withAccountHeader(ah)
                 .addDrawerItems(itemHome, itemSubstitute,
                         itemMypage,
-                        itemSubstitute, itemPay, itemSetting, itemLogout)
+                        itemPay, itemSetting, itemLogout)
+                .withDrawerWidthDp(180)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {

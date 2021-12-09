@@ -38,7 +38,7 @@ public class ActivityChargeTime extends AppCompatActivity implements IaResultHan
             }
             break;
             case R.id.btn_next: {
-                String strChargeTime = etCharge.getText().toString();
+                String strChargeTime = etCharge.getText().toString()+":00";
 
 
                 if (strChargeTime.isEmpty()) {
@@ -56,8 +56,7 @@ public class ActivityChargeTime extends AppCompatActivity implements IaResultHan
                 }
                 else{
                     CaApplication.m_Engine.SetChargeCompleteInfo(CaApplication.m_Info.strId, strChargeTime,this,this);
-                    Intent it = new Intent(this, ActivityHome.class);
-                    startActivity(it);
+
                 }
 
             }
@@ -81,7 +80,7 @@ public class ActivityChargeTime extends AppCompatActivity implements IaResultHan
         }
 
         switch (Result.m_nCallback) {
-            case CaEngine.SET_SIGN_UP_INFO: {
+            case CaEngine.SET_CHARGE_COMPLETE_INFO: {
 
                 try {
                     JSONObject jo = Result.object;
@@ -89,12 +88,12 @@ public class ActivityChargeTime extends AppCompatActivity implements IaResultHan
 
                     if (nResultCode == 1) {
 
-                        Intent it = new Intent(this, ActivitySignUpComplete.class);
+                        Intent it = new Intent(this, ActivityHome.class);
                         startActivity(it);
 
                     } else {
                         AlertDialog.Builder dlg = new AlertDialog.Builder(ActivityChargeTime.this);
-                        dlg.setMessage("회원가입이 정상적으로 진행되지 않았습니다. 처음부터 다시 진행해주세요");
+                        dlg.setMessage("충전 시간이 정상적으로 입력되지 않았습니다. 다시 시도해 주세요");
                         dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                             }

@@ -62,17 +62,12 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
 
         prepareDrawer();
 
-
         m_Context = getApplicationContext();
         m_Pref = new CaPref(m_Context);
         now = System.currentTimeMillis();
         mNow = new Date(now);
 
         nCurrentCap = CaApplication.m_Info.nCurrentCap; //nCurrentCap = 45
-
-
-
-
 
         //윗부분
         tvName = findViewById(R.id.tv_name);
@@ -126,6 +121,7 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
 
         Log.i("HOME", "bPaid is " + CaApplication.m_Info.bPaid);
         //tvMargin
+        Calendar calToday = Calendar.getInstance();
 
         if(CaApplication.m_Info.strCarModel.equals("")){ //차가 없을때
             Log.i("Home", "이용 중인 서비스가 없습니다");
@@ -155,11 +151,10 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
             tvCurrentCap.setText(Integer.toString(nCurrentCap)+ "%");
         }
 
-        if(CaApplication.m_Info.ChargeTime.equals("")){ //스케주링 정보가 없다면
+        if(CaApplication.m_Info.ChargeTime == null){ //스케주링 정보가 없다면
             btnChargeTime.setVisibility(View.VISIBLE);
             btnStation.setVisibility(View.INVISIBLE);
-            tvToday.setVisibility(View.INVISIBLE);
-            tvGuide.setVisibility(View.INVISIBLE);
+
             tvChargeTime.setVisibility(View.INVISIBLE);
             tvChargeTime2.setVisibility(View.INVISIBLE);
 
@@ -174,16 +169,16 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
             tvChargeTime.setVisibility(View.VISIBLE);
             tvChargeTime2.setVisibility(View.VISIBLE);
 
-            Calendar calToday = Calendar.getInstance();
-            tvToday.setText(mMonthDay.format(calToday.getTime()) + "\n오늘의 충전 스케줄");
             tvChargeTime.setText(mAm.format(CaApplication.m_Info.ChargeTime) + "입니다");
             tvChargeTime2.setText(mMonthDayHourMin.format(CaApplication.m_Info.MinBatteryTime)+"의\n" +
                     "예상 배터리 잔량은 "+ CaApplication.m_Info.PreferBattery +"% 입니다");
             if(mMonthDay.format(calToday.getTime()).equals(mMonthDay.format(CaApplication.m_Info.ChargeTime))){
                 tvGuide.setText("오늘은 내 차 충전하는 날!");
             }
+
         }
 
+        tvToday.setText(mMonthDay.format(calToday.getTime()) + "\n오늘의 충전 스케줄");
 
     }
 
@@ -269,11 +264,6 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
                         //history.dtReserve = CaApplication.m_Info.parseDate(joHistory.getString("reserve_time")); date로 변환 참조
                     }
 
-                    CaApplication.m_Engine.GetScheduleInfo(CaApplication.m_Info.strId,this,this);
-                    Intent it = new Intent(this, ActivityHome.class);
-                    startActivity(it);
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -287,16 +277,13 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
                     JSONObject jo = Result.object;
                     CaApplication.m_Info.strName = jo.getString("name");
 
-                    if(!jo.getString("strCarModel").equals("")){
+                    if(!jo.getString("car_model_name").equals("정보없음")){
                         CaApplication.m_Info.dEfficiency = jo.getDouble("efficiency");
                         CaApplication.m_Info.strCarModel = jo.getString("car_model_name");
                         CaApplication.m_Info.dBatteryCapacity = jo.getDouble("battery_capacity");
                         CaApplication.m_Info.nCurrentCap = jo.getInt("current_capacity");
                     }
 
-                    CaApplication.m_Engine.GetScheduleInfo(CaApplication.m_Info.strId,this,this);
-                    Intent it = new Intent(this, ActivityHome.class);
-                    startActivity(it);
 
 
                 } catch (JSONException e) {

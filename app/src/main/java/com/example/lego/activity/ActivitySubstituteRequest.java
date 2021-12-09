@@ -59,7 +59,9 @@ public class ActivitySubstituteRequest extends BaseActivity implements IaResultH
 
 
             case R.id.btn_reserve: {
-
+                strLocation = etLocation.getText().toString();
+                strReserveTime = etReserveTime.getText().toString()+":00";
+                strNotice = etNotice.getText().toString();
                 if (strLocation.isEmpty() || strReserveTime.isEmpty() || strNotice.isEmpty()) {
                     AlertDialog.Builder dlg = new AlertDialog.Builder(ActivitySubstituteRequest.this);
                     //dlg.setTitle("경고"); //제목
@@ -94,7 +96,7 @@ public class ActivitySubstituteRequest extends BaseActivity implements IaResultH
             case CaEngine.SET_SUB_INFO: {
 
                 try {
-                    Log.i("LOGIN", "GetHomeInfo Called...");
+                    Log.i("LOGIN", "SetSubInfo Called...");
                     JSONObject jo = Result.object;
                     int nResultCode = jo.getInt("result_code");
 

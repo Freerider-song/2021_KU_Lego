@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class CaTask extends AsyncTask<CaArg, Void, CaResult> {
 
-    private static final String m_strUrlApi  = "http://118.67.135.33:5000/";
+    private static final String m_strUrlApi  = "http://192.168.0.2:5001/";
 
     private IaResultHandler m_ResultHandler;
     private Context m_Context;
