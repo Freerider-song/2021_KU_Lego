@@ -56,7 +56,7 @@ public class ActivityDriverSub extends AppCompatActivity implements IaResultHand
                 tvTime.setText(mAm.format(customer.dtReserveTime) + " 예정");
                 tvLocation.setText(customer.strLocation);
                 tvCarModel.setText(customer.strCarModel);
-                tvCarNumber.setText(customer.strCarModel);
+                tvCarNumber.setText(customer.strCarNumber);
                 tvPhone.setText(customer.strPhone);
                 tvNotice.setText(customer.strNotice);
             }

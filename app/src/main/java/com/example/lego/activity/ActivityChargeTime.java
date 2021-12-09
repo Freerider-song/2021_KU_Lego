@@ -41,6 +41,7 @@ public class ActivityChargeTime extends AppCompatActivity implements IaResultHan
                 String strChargeTime = etCharge.getText().toString()+":00";
 
 
+
                 if (strChargeTime.isEmpty()) {
                     AlertDialog.Builder dlg = new AlertDialog.Builder(ActivityChargeTime.this);
                     //dlg.setTitle("경고"); //제목

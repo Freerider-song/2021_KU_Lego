@@ -136,19 +136,19 @@ public class ActivitySubstitute extends BaseActivity implements IaResultHandler 
                     int nResultCode= jo.getInt("result_code");
                     if(nResultCode == 1){
                         nReserveId= jo.getInt("reserve_id");
-                        if(!jo.isNull("location")){
-                            dtReserve = CaApplication.m_Info.parseDate(jo.getString("location"));
+                        if(!jo.isNull("reserve_time") && !jo.getString("reserve_time").equals("None")){
+                            dtReserve = CaApplication.m_Info.parseDate(jo.getString("reserve_time"));
                         }
 
-                        strLocation = jo.getString("reserve_time");
+                        strLocation = jo.getString("location");
                         strNotice = jo.getString("notice");
                         strDriverName = jo.getString("driver_name");
                         strDriverPhone = jo.getString("driver_phone");
-                        if(!jo.isNull("pick_up_time")){
+                        if(!jo.isNull("pick_up_time") && !jo.getString("pick_up_time").equals("None")){
                             bPick = true;
                             dtPickUp = CaApplication.m_Info.parseDate(jo.getString("pick_up_time"));
                         }
-                        if(!jo.isNull("complete_time")){
+                        if(!jo.isNull("complete_time")&& !jo.getString("complete_time").equals("None")){
                             bCom = true;
                             dtComplete = CaApplication.m_Info.parseDate(jo.getString("complete_time"));
                         }

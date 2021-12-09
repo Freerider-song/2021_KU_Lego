@@ -76,7 +76,7 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
 
         @Override
         public int getCount() {
-            //Log.i("ChargeHistory" , "alHistory size in listview" + alHistory.size());
+            Log.i("DirverHOme" , "alcustomer size: " + alCustomer.size());
             //return 4;
             return alCustomer.size();
         }
@@ -122,11 +122,13 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
             holder.tvCarModel.setTypeface(tf);
             holder.tvCarNumber.setTypeface(tf);
 
+            Log.i("DirverHOme" , "alcustomer: " + customer.strName);
+
             holder.tvName.setText(customer.strName);
             holder.tvTime.setText(mAm.format(customer.dtReserveTime) + " 예정");
             holder.tvLocation.setText(customer.strLocation);
             holder.tvCarModel.setText(customer.strCarModel);
-            holder.tvCarNumber.setText(customer.strCarModel);
+            holder.tvCarNumber.setText(customer.strCarNumber);
 
             return convertView;
         }
@@ -210,7 +212,7 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
         switch (v.getId()) {
 
             case R.id.btn_menu: {
-
+                m_Drawer.openDrawer();
             }
             break;
 
@@ -230,14 +232,14 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
             case CaEngine.GET_DRIVE_HOME_INFO: {
 
                 try {
-                    Log.i("LOGIN", "GetHomeInfo Called...");
+                    Log.i("LOGIN", "GetDriverHomeInfo Called...");
                     JSONObject jo = Result.object;
 
-                    if(jo.getJSONArray("list_history").length() == 0){
+                    if(jo.getJSONArray("list").length() == 0){
                        tvRemain.setText("0");
                     }
                     else{
-                        JSONArray ja = jo.getJSONArray("features");
+                        JSONArray ja = jo.getJSONArray("list");
 
                         CaApplication.m_Info.alCustomer.clear();
 
@@ -255,11 +257,11 @@ public class ActivityDriverHome extends BaseActivity implements IaResultHandler 
                             customer.strPhone = joCustomer.getString("customer_phone");
 
                             CaApplication.m_Info.alCustomer.add(customer);
+                            Log.i("DriverHome", "customer name: " +customer.strName);
                         }
-                        tvRemain.setText(CaApplication.m_Info.alCustomer.size());
-                        Intent it = new Intent(this, ActivityDriverHome.class);
-                        startActivity(it);
-
+                        tvRemain.setText(String.valueOf(CaApplication.m_Info.alCustomer.size()));
+                        alCustomer = CaApplication.m_Info.alCustomer;
+                        CustomerAdapter.notifyDataSetChanged();
                     }
 
 

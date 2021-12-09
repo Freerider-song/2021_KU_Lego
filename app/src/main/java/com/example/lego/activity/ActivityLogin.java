@@ -207,7 +207,7 @@ public class ActivityLogin extends AppCompatActivity implements IaResultHandler 
                 try {
                     Log.i("LOGIN", "GetHomeInfo Called...");
                     JSONObject jo = Result.object;
-                    JSONArray ja = jo.getJSONArray("features");
+                    JSONArray ja = jo.getJSONArray("list");
 
                     CaApplication.m_Info.alCustomer.clear();
 
