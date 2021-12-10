@@ -297,7 +297,7 @@ public class CaEngine {
 
         CaArg Arg = new CaArg("SetSubCompleteInfo", NO_CMD_ARGS, null);
         Arg.addArg("Reservation_id", ReservationId);
-        Arg.addArg("complete_time", CompleteTime);
+        Arg.addArg("Complete_time", CompleteTime);
 
 
         executeCommand(Arg, SET_SUB_COMPLETE_INFO, false, true, Ctx, ResultHandler);

@@ -33,7 +33,7 @@ public class ActivityMyPage extends BaseActivity implements IaResultHandler {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
-        CaApplication.m_Engine.GetMyPageInfo(CaApplication.m_Info.strId, this,this);
+        //CaApplication.m_Engine.GetMyPageInfo(CaApplication.m_Info.strId, this,this);
 
         prepareDrawer();
 
@@ -47,17 +47,12 @@ public class ActivityMyPage extends BaseActivity implements IaResultHandler {
 
         tvName.setText("     " + CaApplication.m_Info.strName);
         tvId.setText("     "+ CaApplication.m_Info.strId);
-        tvCarModel.setText("     "+CaApplication.m_Info.strCarModel);
+        tvCarModel.setText(CaApplication.m_Info.strCarModel);
+        tvCarNumber.setText(CaApplication.m_Info.strCarNumber);
 
-        viewSetting();
 
     }
-    void viewSetting(){
-        tvName.setText("     " + Name);
-        tvId.setText("     "+ Id);
-        tvCarModel.setText("     "+ CarModel);
-        tvCarNumber.setText("     " + CarNumber);
-    }
+
 
     public void onClick(View v) {
         switch (v.getId()) {
@@ -102,7 +97,6 @@ public class ActivityMyPage extends BaseActivity implements IaResultHandler {
                     CarNumber = jo.getString("car_number");
                     Id = jo.getString("customer_id");
 
-                    viewSetting();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

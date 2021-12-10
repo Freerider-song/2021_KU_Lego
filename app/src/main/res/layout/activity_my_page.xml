@@ -236,7 +236,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="170dp"
+        android:layout_height="190dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
@@ -245,6 +245,19 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name17">
+
+        <Button
+            android:id="@+id/btn_car3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="#212121"
+            android:onClick="onClick"
+            android:text="정보 수정 >"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tv_car_number"
@@ -275,8 +288,8 @@
             android:id="@+id/imageView2"
             android:layout_width="150dp"
             android:layout_height="80dp"
-            android:layout_marginStart="70dp"
-            app:layout_constraintStart_toEndOf="@+id/tv_car_model"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_car_model"
             app:srcCompat="@drawable/ionic" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -164,6 +164,13 @@ public class BaseActivity extends AppCompatActivity {
         itemLogout.withSelectable(false);
         itemLogout.withTypeface(mTypeface);
 
+        SecondaryDrawerItem itemChange = new SecondaryDrawerItem();
+        itemChange.withIdentifier(1001);
+        itemChange.withName("기사 화면으로 전환");
+        itemChange.withTextColor(Color.rgb(177, 177, 177));
+        itemChange.withSelectable(false);
+        itemChange.withTypeface(mTypeface);
+
         final BaseActivity This=this;
         final Context Ctx=getApplicationContext();
 
@@ -171,7 +178,7 @@ public class BaseActivity extends AppCompatActivity {
                 .withActivity(this).withSliderBackgroundColor(getResources().getColor(R.color.lego_side_menu)).withAccountHeader(ah)
                 .addDrawerItems(itemHome, itemSubstitute,
                         itemMypage,
-                        itemPay, itemSetting, itemLogout)
+                        itemPay, itemSetting, itemLogout, itemChange)
                 .withDrawerWidthDp(180)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -209,6 +216,12 @@ public class BaseActivity extends AppCompatActivity {
                                 //startActivity(it);
                             }
                             break;
+
+                            case 1001: {
+                                CaApplication.m_Info.strId = "driver";
+                                Intent it = new Intent(This, ActivityDriverHome.class);
+                                startActivity(it);
+                            }
 
                             case CaEngine.MENU_LOGOUT: {
 

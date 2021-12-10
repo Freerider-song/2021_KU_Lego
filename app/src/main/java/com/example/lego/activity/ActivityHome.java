@@ -263,6 +263,7 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
                         CaApplication.m_Info.ChargeTime = CaApplication.m_Info.parseDate(jo.getString("charge_time"));
                         //history.dtReserve = CaApplication.m_Info.parseDate(joHistory.getString("reserve_time")); date로 변환 참조
                     }
+                    viewSetting();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -282,6 +283,7 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
                         CaApplication.m_Info.strCarModel = jo.getString("car_model_name");
                         CaApplication.m_Info.dBatteryCapacity = jo.getDouble("battery_capacity");
                         CaApplication.m_Info.nCurrentCap = jo.getInt("current_capacity");
+                        CaApplication.m_Info.strCarNumber = jo.getString("car_number");
                     }
 
 
@@ -326,7 +328,7 @@ public class ActivityHome extends BaseActivity implements IaResultHandler {
                         Log.i("ChargeHistory" , "alHistory size" + alHistory.size());
 
                     }
-                    tvMargin.setText(CaApplication.m_Info.m_dfWon.format(alHistory.size() * 1562) +" 원을 벌었어요");
+
 
 
                 } catch (JSONException e) {
